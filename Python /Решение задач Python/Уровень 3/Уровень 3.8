@@ -1,0 +1,50 @@
+# Уровень 3.8
+# 1. Дан список с числами [3, 35, 313, 73, 53]. Проверьте что все числа из этого списка содержат в себе цифру 3.
+
+list = [3, 35, 313, 73, 53]
+
+l = len(list)
+count = 0
+
+for i in list:
+    if "3" in str(i):
+        count +=1
+        
+if count == l:
+    print ("Все числа содержат цифру 3")
+else:
+    print ("Не все числа содержат цифру 3")
+        
+# 2. Дан список с числами [1,2,45,6,7,8,56,5]. Выведите в консоль наибольшее из этих чисел.
+
+list = [1,2,45,6,7,8,56,5]  
+
+a = max(list)
+
+print(a)
+
+# 3. Дана строка "kebab-case". Преобразуйте ее в формат "snake_case".
+
+string = "kebab-case"
+
+list = string.split("-")
+list[0] = "snake_"
+
+result = ""
+
+for i in list:
+    result += i
+    
+print(result)
+
+# 4. Дана строка "snake_case". Преобразуйте ее в формат "camelCase".
+
+string = "snake_case"
+
+list = string.split("_")
+a = list[0] = "camel"
+b = list[1].title()
+
+result = a+b
+
+print(result)
