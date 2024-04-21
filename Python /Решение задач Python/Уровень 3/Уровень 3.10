@@ -1,0 +1,110 @@
+# Уровень 3.10
+# 1. Дан список [1,2,3,4,5,6] и число 3. Отсавьте в списке только те числа, которые являются делителями этого числа.
+
+list = [1,2,3,4,5,6]
+
+result = []
+
+for i in list:
+    if i%3 == 0:
+        result.append(i)
+        
+print(result)
+
+# 2. Дан список с числами [1,34,3,6,7,45,6,78,45,4,5]. После каждого однозначного числа вставьте еще такое же.
+
+list = [1,34,3,6,7,45,6,78,45,4,5]
+
+result = []
+
+for i in list:
+    string = str(i)
+    a = len(string)
+    if a == 1:
+        result.append(i)
+        result.append(i)
+    else:
+        result.append(i)
+        
+print(result)
+
+# 3. Даны два числа 12345 34252. Получите список цифр, которые есть в обоих числах.
+
+a = 12345
+b = 34252
+
+string1 = str(a)
+string2 = str(b)
+
+result = []
+
+for i in string1:
+    if i in string2:
+        result.append(int(i))
+        
+print(result)
+
+# 4. Дано число 435634333567367.Получите список позиций всех цифр 3 в этом числе, за исключением первой и последней.
+
+a = 435634333567367
+
+string = str(a)
+
+result = []
+
+count = 0
+
+for i in string:
+    count += 1
+    if i == "3":
+        result.append(count)
+        
+
+result.remove(result[0])
+result.remove(result[-1])
+    
+print(result)
+
+# 5. Дан список с числами [1, 23, 44, 345, 445, 999]. Оставьте в нем числа, состоящие из разных цифр, остальные удалите.
+
+list = [1, 23, 44, 345, 445, 999]
+
+result = []
+
+for i in list:
+    string = str(i)
+    a = len(string)
+    b = len(set(string))
+
+    if a == b:
+        result.append(string)
+        
+print(result)
+
+# 6. Даны два списка list1 = [1,2,3], list2 = [1,2,3,4,5]. Удалите из большего списка лишние элементы с конца так, чтобы длины списков стали одинаковыми.
+
+list1 = [1,2,3]
+list2 = [1,2,3,4,5]
+
+a = len(list1)
+
+result = []
+
+for i in list2:
+    if i <= a:    
+        result.append(i)
+        
+print(result)
+
+# 7. Дан список с некоторыми числами [123,456,789]. Переверните числа в этом списке [321,654,987].
+
+list = [123,456,789]
+
+result = []
+
+for i in list:
+    string = str(i)
+    string_rev = string[::-1]
+    result.append(int(string_rev))
+    
+print(result)
