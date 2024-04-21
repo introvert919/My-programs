@@ -1,0 +1,69 @@
+# Уровень 2.6
+# 1. Дана строка с буквами и цифрами 'abc56d4e67fgh'. Получите список позици всех цифр этой строки.
+
+string ='abc56d4e67fgh'
+
+list =[]
+
+count = -1
+
+for i in string:
+    count += 1
+    if i == "0" or i == "1" or i == "2" or i == "3" or i == "4" or i == "5" or i == "6" or i == "7" or i == "8" or i == "9":
+        list.append(count)
+        
+print(list)
+
+# 2. Дана строка 'AbCdE'. Смените регистр букв этой строки на противоположный 'aBcDe'.
+
+string = 'AbCdE'
+
+count = 0
+
+result = []
+
+for i in string:
+    count += 1
+    if count%2 !=0:
+        a=i.lower()
+        result.append(a)
+    else:
+        a=i.upper()
+        result.append(a)
+        
+print(result)
+    
+# 3. Дан список с числами [1,2,3,4,5,6]. Слейте пары элементов вместе: [12, 34, 56]
+
+list = [1,2,3,4,5,6]
+
+result = []
+
+count = 0
+
+for i in list:
+    count += 1
+    if count%2 !=0:
+        string = str(i)+str(i+1)
+        result.append(string)
+
+print(result)
+
+# 4. Дана строка 'aaa bbb ccc eee fff'. Сделайте заглавным первый символ каждого второго слова в этой строке 'aaa Bbb ccc Eee fff'.
+
+string = 'aaa bbb ccc eee fff'
+
+list = string.split()
+
+result = []
+
+count =0
+for i in list:
+    count += 1
+    if count%2 != 0:
+        result.append(i)
+    else:
+        a = i.title()
+        result.append(a)
+        
+print(result)
