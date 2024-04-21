@@ -1,0 +1,42 @@
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+class Point
+{
+private:
+
+	int x;
+
+public:
+
+	int Get_x()
+	{
+		return x;
+	}
+	
+	int Set_x(int value_x)
+	{
+		x = value_x;
+		return 0;
+	}
+
+	int Print()
+	{
+		cout << "x = " << x << endl;
+		return 0;
+	}
+};
+
+int main()
+{
+	setlocale(LC_ALL, "ru");
+
+	Point a;
+	a.Set_x(5);
+
+	a.Print();
+
+	return 0;
+}
