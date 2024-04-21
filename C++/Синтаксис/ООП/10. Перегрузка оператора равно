@@ -1,0 +1,44 @@
+#include<iostream>
+
+using namespace std;
+
+class Point
+{
+public:
+
+	int x;
+	int y;
+
+	Point(int value_x, int value_y)
+	{
+		x = value_x;
+		y = value_y;
+		cout << "Вызвался конструктор класса " << endl;
+	}
+
+	bool operator == (const Point other)
+	{
+		if (this->x == other.x && this->y == other.y)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+		cout << "Вызвался оператор == " << endl;
+	}
+};
+
+int main()
+{
+	setlocale(LC_ALL, "ru");
+
+	Point a(1, 2);
+	Point b(1, 2);
+
+	bool result = a == b;
+	cout << result << endl;
+	return 0;
+}
