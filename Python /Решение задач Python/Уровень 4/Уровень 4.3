@@ -1,0 +1,74 @@
+# Уровень 4.3
+# 1. Дан список [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]. Удалите из него каждый пятый элемент.
+
+list = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+
+count = 1
+
+result = []
+
+for i in list:
+    if count%5 != 0:
+        result.append(i)
+    count += 1
+    
+print(result)
+
+# 2. Даны два числа 123 373. Получите список общих делителей этих чисел.
+
+a = 123
+b = 373
+
+n = 1
+
+result_a = []
+result_b = []
+
+while n <= a:
+    if a%n == 0:
+        result_a.append(n)   
+    n += 1
+print(result_a)
+        
+n = 1
+
+while n <= b:
+    if b%n == 0:
+        result_b.append(n)
+    n += 1 
+print(result_b)
+        
+result = set(result_a).intersection(set(result_b))
+
+result_list = list(result)
+
+print(result_list)
+
+# 3. Даны два числа a =12345, b = 45678. Получите кортеж цифр, которые есть и в одном, и в другом числе.
+
+a =12345
+b = 45678
+
+list = []
+
+for i in str(a):
+    if i in str(b):
+       list.append(int(i))
+       
+result = tuple(list)
+
+print(result) 
+
+# 4. Дан список [[[11,12,13],[14,15,16],[17,18,19]],[[21,22,23],[24,25,26],[27,28,29]],[[31,32,33],[34,35,36],[37,38,39]]].
+# Найдите сумму элементов этого списка.
+
+list = [[[11,12,13],[14,15,16],[17,18,19]],[[21,22,23],[24,25,26],[27,28,29]],[[31,32,33],[34,35,36],[37,38,39]]]
+
+sum = 0
+
+for i in list:
+    for i in i:
+        for i in i:
+            sum += i
+            
+print(sum)
