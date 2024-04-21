@@ -1,0 +1,60 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+
+class image
+{
+public:
+
+	void get_image_info()
+	{
+		for (int i = 0; i < length; i++)
+		{
+			cout << pixels[i].get_info() << endl;
+		}
+	}
+
+private:
+
+	class pixel
+	{
+	public:
+		pixel(int r, int g, int b)
+		{
+			this->r = r;
+			this->g = g;
+			this->b = b;
+		}
+
+		string get_info()
+		{
+			return "Pixel: r= " + to_string(r) + " g= " + to_string(g) + " b= " + to_string(b);
+		}
+
+	private:
+		int r;
+		int g;
+		int b;
+	};
+
+	static const int length = 5;
+
+	pixel pixels[length]
+	{
+		pixel(0, 4, 64),
+		pixel(4, 14, 10),
+		pixel(111, 4, 24),
+		pixel(244, 244, 14),
+		pixel(111, 179, 64)
+	};
+};
+
+int main()
+{
+	image image1;
+	image1.get_image_info();
+
+	return 0;
+}
