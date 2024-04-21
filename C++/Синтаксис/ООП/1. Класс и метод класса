@@ -1,0 +1,33 @@
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+class Human
+{
+public:
+
+	string name;
+	int age;
+	int weight;
+	
+	int Print()
+	{
+		cout << "Имя " << name << "\tВозраст " << age << "\tВес " << weight  << endl;
+		return 0;
+    }
+};
+
+int main()
+{
+	setlocale(LC_ALL, "ru");
+
+	Human first_human;
+	first_human.name = "Андрей";
+	first_human.age = 37;
+	first_human.weight = 50;
+
+	first_human.Print();
+
+	return 0;
+}
