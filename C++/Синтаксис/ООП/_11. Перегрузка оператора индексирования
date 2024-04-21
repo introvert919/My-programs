@@ -1,0 +1,29 @@
+#include <iostream>
+
+using namespace std;
+
+
+class Myclass
+{
+public:
+
+	int& operator[](int index)
+	{
+		return arr[index];
+	}
+
+private:
+
+	int arr[5]{ 5,44,4,987,69 };
+};
+
+
+int main()
+{
+	Myclass a;
+	a[1];
+
+	cout << a[1] << endl;
+
+	return 0;
+}
