@@ -1,0 +1,68 @@
+#include<iostream>
+
+using namespace std;
+
+class Myclass
+{
+public:
+
+	int *Data;
+
+	Myclass(int Size)
+	{
+		this->Data = new int[Size];
+		for (int i = 0; i < Size; i++)
+		{
+			Data[i] = i;
+		}
+		cout << "Вызвался конструктор класса " << this << endl;
+	}
+
+	Myclass &operator = (const Myclass &other)
+	{
+		cout << "Вызвался оператор = " << this << endl;
+		this -> Size = other.Size;
+		if (this -> Data != nullptr)
+		{
+			delete[] this -> Data;
+		}
+
+		this->Data = new int[other.Size];
+		for (int i = 0; i < other.Size; i++)
+		{
+			this->Data[i] = other.Data[i];
+		}
+
+		return *this;
+	}
+
+	~Myclass()
+	{
+		delete Data;
+		cout << "Вызвался деструктор " << this << endl;
+	}
+
+	int Print()
+	{
+		;
+		for (int i = 0; i < 3; i++)
+		{
+			cout << Data[i] << endl;
+		}
+		return 0;
+	}
+private:
+	int Size;
+};
+
+int main()
+{
+	setlocale(LC_ALL, "ru");
+
+	Myclass a(1);
+	Myclass b(3);
+	
+	a = b;
+
+	return 0;
+}
