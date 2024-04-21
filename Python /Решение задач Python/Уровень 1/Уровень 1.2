@@ -1,1 +1,55 @@
+# Уровень 1.2
+# 1. Дано число. Выведите в консоль первую цифру этого числа.
 
+chislo = int(input())
+
+tsifra = str(chislo)[0]
+
+print (tsifra)
+
+# 2. Дано число. Выведите в консоль последнюю цифру этого числа.
+
+chislo = int(input())
+
+tsifra = str(chislo)[-1]
+
+print (tsifra)
+
+# 3. Дано число. Выведите в консоль сумму первой и последней цифры этого числа.
+
+chislo = int(input())
+
+tsifra1_str = str(chislo)[0]
+tsifra2_str = str(chislo)[-1]
+
+result = int(tsifra1_str) + int(tsifra2_str)
+                          
+print(result)
+
+# 4. Дано число. Выведите количество цифр в этом числе.
+
+a = int(input())
+
+string = str(a)
+print (len(string))
+
+# 5. Даны два числа. Проверьте совпадают ли первые цифры этих чисел.
+
+a = int(input())
+b = int(input())
+
+tsifra1 = str(a)[0]
+tsifra2 = str(b)[0]
+
+if tsifra1 == tsifra2:
+    print("Совпадают")
+else:
+    print("Не совпадают")
+
+# 6. Дан список [1,2,3,4,5,6]. Получите из него следующий срез: [1,2,3]
+
+list = [1,2,3,4,5,6]
+
+viborka = list[0:3:1]
+
+print(viborka)
