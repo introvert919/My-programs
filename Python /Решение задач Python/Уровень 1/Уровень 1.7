@@ -1,0 +1,69 @@
+# Уровень 1.7
+# 1. Дан словарь {'a':1, 'b':2, 'c':3, 'd':4}. Найдите сумму элементов этого словаря.
+
+dict = {'a':1, 'b':2, 'c':3, 'd':4}
+
+result = 0
+
+for i in dict:
+    result += dict[i]
+    
+print (result)
+    
+# 2. Дан словарь {'a':1,'b':2, 'c':3, 'd':4}. Найдите сумму квадратов элементов этого словаря.
+
+dict = {'a':1,'b':2, 'c':3, 'd':4}
+
+result = 0
+
+for i in dict:
+    result += dict[i]*dict[i]
+    
+print (result)
+
+# 3. Дана строка 'abcde'. Получите список букв этой строки.
+
+string = 'abcde'
+
+list = []
+
+for i in string:
+    list.append(i)
+    
+print(list)
+
+# 4. Дано число 12345. Получите список цифр этого числа.
+
+a = 12345
+
+list = []
+
+string = str(a)
+
+for i in string:
+    list.append(i)
+    
+print(list)
+
+# 5. Дано число 12345. Переверните его.
+
+a = 12345
+
+string = str(a)
+
+result = string[::-1]
+
+print(result)
+
+# 6. Дано число 12345. Найдите сумму цифр этого числа.
+
+a = 12345
+
+string = str(a)
+
+result = 0
+
+for i in string:
+    result += int(i)
+    
+print(result)
