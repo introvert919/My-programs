@@ -1,0 +1,60 @@
+# Уровень 3.7
+# 1. Дана строка 'abc abcd drtg dfgg vbnnn'. Сделайте заглавной последнюю букву каждого слова в этой строке.
+
+string = 'abc abcd drtg dfgg vbnnn'
+
+string_iter1 = string[::-1]
+
+string_iter2 = string_iter1.title()
+
+result = string_iter2[::-1]
+
+print(result)
+
+# 2. Дана строка '13579537157'. Проверьте, что строка состоит только из четных цифр.
+
+string = '13579537157'
+
+n = len(string)
+
+count = 0
+
+for i in string:
+    if i in "0123456789" and int(i)%2 ==0:
+        count +=1
+        
+if count == n:
+    print("Строка состоит только из четных цифр")
+else:
+    print("Не все символы в строке четные цифры")
+
+# 3. Даны две строки string1 = '12345', string2 = '45678'. Получите символы, которые есть и в одной и в другой строке '45'.
+
+string1 = '12345'
+string2 = '45678'
+
+result = ""
+
+for i in string1:
+    if i in string2:
+        result += i
+            
+print(result)
+
+# 4. Дана строка  "a bc def ghij". Переведите в верхний регистр все подстроки, 
+# в которых количество букв меньше или равно трем "A BC DEF ghij.
+
+string ="a bc def ghij"
+
+list = string.split()
+result = ""
+
+for i in list:
+    n = len(i)
+    if n <= 3:
+        a =i.upper()
+        result += a + " "
+    else:
+        result += i
+    
+print(result)
