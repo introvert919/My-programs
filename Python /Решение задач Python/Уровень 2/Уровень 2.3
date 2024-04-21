@@ -1,0 +1,60 @@
+# Уровень 2.3
+# 1. Даны два слова. Проверьте совпадает ли последняя буква первого слова с первой буквой второго.
+
+string1 = input()
+string2 = input()
+
+if string1[-1] == string2[0]:
+    print("Совпадают")
+else:
+    print("Не совпадают")
+
+# 2. Дана строка 'abc0de0fgh0ijk0lmn'. Найдите позицию третьего нуля в строке.
+
+string = 'abc0de0fgh0ijk0lmn'
+count = 0
+
+result = []
+
+for i in string:
+    if i != '0':
+        count += 1
+        
+    if i =='0':
+        result.append(count)
+        count += 1
+
+print("Третий 0 под индексом = ", result[2])
+
+# 3. Даны числа, разделенные запятыми '12, 34, 56'. Найдите сумму этих чисел.
+
+string = '12,34,56'
+
+list = string.split(',')
+
+result = 0
+
+for i in list:
+    result += int(i)
+
+print (result)
+
+# 4. Дана дата в следующем формате '2025-12-31'. Преобразуйте эту далу в словарь: {'year': '2025', 'month': '12', 'day':'31'}.
+
+string = '2025-12-31'
+
+dict = {}
+
+dict['year'] = 2025
+dict['month'] = 12
+dict['day'] = 31
+
+print(dict)
+
+# 5. Дан словарь {'a': 5, 'b':2, 'c':1, 'd':4}. Получите сет его значений.
+
+dict = {'a': 5, 'b':2, 'c':1, 'd':4}
+
+result = set(dict.values())
+
+print(result)
