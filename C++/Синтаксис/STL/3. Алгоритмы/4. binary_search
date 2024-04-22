@@ -1,0 +1,109 @@
+binary_search
+
+Описание
+Проверяет, имеется ли элемент в отсортированный диапазон, равный указанному значению или эквивалентном ему в смысле, заданном двоичным предикатом.
+
+Параметры
+First - Прямой итератор, адресующий положение первого элемента в диапазоне для поиска.
+Last - Прямой итератор, адресующий положение на единицу после последнего элемента в диапазоне для поиска.
+Value - Значение должно соответствовать значению элемента или удовлетворять условию со значением элемента, заданному двоичным предикатом.
+Pred - Определяемый пользователем объект функции предиката, задающий условие, когда один элемент меньше другого. Бинарный предикат принимает два аргумента и возвращает true в случае соответствия и false в случае несоответствия.
+
+Возвращаемое значение
+Значение true, если в диапазоне обнаруживается элемент, равный или эквивалентный указанному значению; в противном случае — значение false.
+
+Замечания
+Упорядоченный исходный диапазон, на который указывает ссылка, должен быть допустим. Все указатели должны поддерживать отмену ссылок. В последовательности должна иметься возможность достижения последней позиции с первой путем приращения.
+Предварительное условие для применения алгоритма binary_search состоит в том, что каждый упорядоченный диапазон должен быть упорядочен в соответствии с теми же правилами, которые будут использоваться этим алгоритмом для сортировки объединенных диапазонов.
+Исходные диапазоны не изменяются binary_search.
+Типы значений для итераторов пересылки должны быть меньше, чем сравнимые для упорядочения. То есть, учитывая два элемента, можно определить, что одно меньше другого или что они эквивалентны. (Здесь эквивалентно означает, что ни один не меньше другого.) Это сравнение приводит к упорядочению между элементами nonequivalent.
+Сложность алгоритма — логарифмическая для итераторов случайного доступа итераторов и линейных в противном случае с числом шагов пропорционально (last-first).
+
+Пример
+
+// alg_bin_srch.cpp
+// compile with: /EHsc
+#include <list>
+#include <vector>
+#include <algorithm>
+#include <functional>      // greater<int>( )
+#include <iostream>
+
+// Return whether modulus of elem1 is less than modulus of elem2
+bool mod_lesser( int elem1, int elem2 )
+{
+    if (elem1 < 0)
+        elem1 = - elem1;
+    if (elem2 < 0)
+        elem2 = - elem2;
+    return elem1 < elem2;
+}
+
+int main()
+{
+    using namespace std;
+
+    list<int> List1;
+
+    List1.push_back( 50 );
+    List1.push_back( 10 );
+    List1.push_back( 30 );
+    List1.push_back( 20 );
+    List1.push_back( 25 );
+    List1.push_back( 5 );
+
+    List1.sort();
+
+    cout << "List1 = ( " ;
+    for ( auto Iter : List1 )
+        cout << Iter << " ";
+    cout << ")" << endl;
+
+    // default binary search for 10
+    if ( binary_search(List1.begin(), List1.end(), 10) )
+        cout << "There is an element in list List1 with a value equal to 10."
+        << endl;
+    else
+        cout << "There is no element in list List1 with a value equal to 10."
+        << endl;
+
+    // a binary_search under the binary predicate greater
+    List1.sort(greater<int>());
+    if ( binary_search(List1.begin(), List1.end(), 10, greater<int>()) )
+        cout << "There is an element in list List1 with a value greater than 10 "
+        << "under greater than." << endl;
+    else
+        cout << "No element in list List1 with a value greater than 10 "
+        << "under greater than." << endl;
+
+    // a binary_search under the user-defined binary predicate mod_lesser
+    vector<int> v1;
+
+    for ( auto i = -2; i <= 4; ++i )
+    {
+        v1.push_back(i);
+    }
+
+    sort(v1.begin(), v1.end(), mod_lesser);
+
+    cout << "Ordered using mod_lesser, vector v1 = ( " ;
+    for ( auto Iter : v1 )
+        cout << Iter << " ";
+    cout << ")" << endl;
+
+    if ( binary_search(v1.begin(), v1.end(), -3, mod_lesser) )
+        cout << "There is an element with a value equivalent to -3 "
+        << "under mod_lesser." << endl;
+    else
+        cout << "There is not an element with a value equivalent to -3 "
+        << "under mod_lesser." << endl;
+}
+
+Output
+List1 = ( 5 10 20 25 30 50 )
+There is an element in list List1 with a value equal to 10.
+There is an element in list List1 with a value greater than 10 under greater than.
+Ordered using mod_lesser, vector v1 = ( 0 -1 1 -2 2 3 4 )
+There is an element with a value equivalent to -3 under mod_lesser.
+
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#adjacent_find
