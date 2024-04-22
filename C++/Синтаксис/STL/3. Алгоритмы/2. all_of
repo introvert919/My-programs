@@ -1,0 +1,50 @@
+all_of	
+
+Описание
+Возвращает значение true, если условие выполняется каждым элементом заданного диапазона.
+
+Параметры
+exec - используемая политика выполнения.
+first - входной итератор, указывающий, откуда должна начинаться проверка условия. Итератор отмечает, где начинается диапазон элементов.
+last - входной итератор, указывающий конец диапазона элементов для проверки условия.
+pred - условие -для проверки. pred— это определяемый пользователем унарный объект функции предиката, определящий условие, которое должно быть удовлетворено элементом, проверка. Унарный предикат принимает один аргумент и возвращает true или false.
+
+Возвращаемое значение
+Возвращает значение true , если условие обнаружено на каждом элементе в указанном диапазоне или если диапазон пуст, и false в противном случае.
+
+Замечания
+Функция шаблона возвращает значение true, только если для каждого N в диапазоне [0, last – first) предикат pred(*(first + N)) имеет значение true.
+
+Пример
+
+// alg_all_of.cpp
+// compile with: /EHsc
+#include <list>
+#include <algorithm>
+#include <iostream>
+
+int main()
+{
+    using namespace std;
+
+    list<int> li { 50, 40, 10, 20, 20 };
+    list<int>::iterator iter;
+
+    cout << "li = ( ";
+    for (iter = li.begin(); iter != li.end(); iter++)
+        cout << *iter << " ";
+    cout << ")" << endl;
+
+    // Check if all elements in li are even.
+    auto is_even = [](int elem){ return !(elem % 2); };
+    if (all_of(li.begin(), li.end(), is_even))
+        cout << "All the elements are even numbers.\n";
+    else
+        cout << "Not all the elements are even numbers.\n";
+}
+
+Output
+li = ( 50 40 10 20 20 )
+All the elements are even numbers.
+
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#adjacent_find
