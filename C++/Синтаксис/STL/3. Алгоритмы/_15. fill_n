@@ -1,0 +1,74 @@
+fill_n
+
+Описание
+Назначает новое значение указанному количеству элементов в диапазоне, начиная с определенного элемента.
+
+Параметры
+exec
+Используемая политика выполнения.
+first
+Выходной итератор, указывающий позицию первого элемента в диапазоне, в котором должны назначаться значения value.
+count
+Целое число со знаком или без знака, указывающее количество элементов, которым следует назначить значение.
+value
+Значение, назначенное элементам в диапазоне [first, first + count).
+
+Возвращаемое значение
+Итератор элемента, который следует последнему элементу, заполненному count> нулевой, в противном случае — первый элемент.
+
+Замечания
+Целевой диапазон должен быть допустимым; все указатели должны поддерживать сброс ссылок; должна быть возможность достижения последнего положения с первого путем приращения. Сложность линейная по отношению к размеру диапазона.
+
+Пример
+
+// alg_fill_n.cpp
+// compile using /EHsc
+#include <vector>
+#include <algorithm>
+#include <iostream>
+
+int main()
+{
+    using namespace std;
+    vector<int> v;
+
+    for ( auto i = 0 ; i < 9 ; ++i )
+        v.push_back( 0 );
+
+    cout << "vector v = ( " ;
+    for ( const auto &w : v )
+        cout << w << " ";
+    cout << ")" << endl;
+
+    // Fill the first 3 positions with a value of 1, saving position.
+    auto pos = fill_n( v.begin(), 3, 1 );
+
+    cout << "modified v = ( " ;
+    for ( const auto &w : v )
+        cout << w << " ";
+    cout << ")" << endl;
+
+    // Fill the next 3 positions with a value of 2, using last position.
+    fill_n( pos, 3, 2 );
+
+    cout << "modified v = ( " ;
+    for ( const auto &w : v )
+        cout << w << " ";
+    cout << ")" << endl;
+
+    // Fill the last 3 positions with a value of 3, using relative math.
+    fill_n( v.end()-3, 3, 3 );
+
+    cout << "modified v = ( " ;
+    for ( const auto &w : v )
+        cout << w << " ";
+    cout << ")" << endl;
+}
+
+Output
+vector v = ( 0 0 0 0 0 0 0 0 0 )
+modified v = ( 1 1 1 0 0 0 0 0 0 )
+modified v = ( 1 1 1 2 2 2 0 0 0 )
+modified v = ( 1 1 1 2 2 2 3 3 3 )
+
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#count
