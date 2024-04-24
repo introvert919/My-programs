@@ -1,0 +1,26 @@
+minmax_element
+
+Описание
+Выполняет работу, которую делают min_element и max_element, в одном вызове.
+
+Параметры
+exec
+Используемая политика выполнения.
+first
+Прямой итератор, указывающий начало диапазона.
+last
+Прямой итератор, указывающий конец диапазона.
+pred
+Определяемый пользователем объект функции предиката, определяющий смысл, в котором один элемент меньше другого. Предикат сравнения принимает два аргумента и должен возвращать true , если первый меньше второго, а false в противном случае .
+
+Возвращаемое значение
+Возвраты
+pair<ForwardIterator, ForwardIterator>( min_element(first, last), max_element(first, last)).
+
+Замечания
+Первая функция шаблона возвращает
+pair<ForwardIterator,ForwardIterator>(min_element(first,last), max_element(first,last)).
+Вторая функция шаблона работает так же, за исключением того, что она заменяет operator<(X, Y) на pred(X, Y).
+Если последовательность непустая, функция выполняет не более 3 * (last - first - 1) / 2 сравнений.
+
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#minmax_element
