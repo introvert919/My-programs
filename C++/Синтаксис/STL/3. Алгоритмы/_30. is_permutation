@@ -1,0 +1,81 @@
+is_permutation
+
+Описание
+Возвращает, true если оба диапазона содержат одинаковые элементы, независимо от того, находятся ли элементы в одном порядке. Используйте перегрузки двойного диапазона в коде C++14, так как перегрузки, которые принимают только один итератор для второго диапазона, не будут обнаруживать различия, если второй диапазон длиннее первого диапазона. Эти перегрузки будут привести к неопределенному поведению, если второй диапазон короче первого диапазона.
+
+Параметры
+first1
+Прямой итератор, указывающий на первый элемент диапазона.
+last1
+Прямой итератор, указывающий на место, следующее за последним элементом диапазона.
+first2
+Прямой итератор, указывающий на первый элемент второго диапазона, используемый для сравнения.
+last2
+Прямой итератор, указывающий на место, следующее за последним элементом второго диапазона, используемым для сравнения.
+pred
+Предикат, который проверяет равенство и возвращает bool.
+
+Возвращаемое значение
+true, когда диапазоны можно переупорядочить так, чтобы они стали совпадающими в соответствии с предикатом сравнения. В противном случае — false.
+
+Замечания
+is_permutation в худшем случае имеет квадратичную сложность.
+Первая функция шаблона предполагает, что в диапазоне имеется столько элементов, начиная first2 с указанного диапазона [first1, last1). Если в втором диапазоне есть больше элементов, они игнорируются; Если есть меньше, неопределенное поведение будет происходить. Третья функция шаблона (C++14 и более поздних версий) не делает это предположение. Оба возвращаются true только в том случае, если для каждого элемента X в диапазоне, указанного в [first1, last1) диапазоне, есть столько элементов Y в одном диапазоне, для которого X == Y в диапазоне начинается first2 или [first2, last2). operator== Здесь необходимо выполнить попарное сравнение операндов.
+Вторая и четвертая функции шаблона действуют одинаково, за исключением того, что они заменяют operator==(X, Y) на Pred(X, Y). Для правильного поведения предикат должен быть симметричным, рефлексивным и транзитивным.
+
+Пример
+В следующем примере показано использование is_permutation.
+
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+    vector<int> vec_1{ 2, 3, 0, 1, 4, 5 };
+    vector<int> vec_2{ 5, 4, 0, 3, 1, 2 };
+
+    vector<int> vec_3{ 4, 9, 13, 3, 6, 5 };
+    vector<int> vec_4{ 7, 4, 11, 9, 2, 1 };
+
+    cout << "(1) Compare using built-in == operator: ";
+    cout << boolalpha << is_permutation(vec_1.begin(), vec_1.end(),
+        vec_2.begin(), vec_2.end()) << endl; // true
+
+    cout << "(2) Compare after modifying vec_2: ";
+    vec_2[0] = 6;
+    cout << is_permutation(vec_1.begin(), vec_1.end(),
+        vec_2.begin(), vec_2.end()) << endl; // false
+
+    // Define equivalence as "both are odd or both are even"
+    cout << "(3) vec_3 is a permutation of vec_4: ";
+    cout << is_permutation(vec_3.begin(), vec_3.end(),
+        vec_4.begin(), vec_4.end(),
+        [](int lhs, int rhs) { return lhs % 2 == rhs % 2; }) << endl; // true
+
+    // Initialize a vector using the 's' string literal to specify a std::string
+    vector<string> animals_1{ "dog"s, "cat"s, "bird"s, "monkey"s };
+    vector<string> animals_2{ "donkey"s, "bird"s, "meerkat"s, "cat"s };
+
+    // Define equivalence as "first letters are equal":
+    bool is_perm = is_permutation(animals_1.begin(), animals_1.end(), animals_2.begin(), animals_2.end(),
+        [](const string& lhs, const string& rhs)
+    {
+        return lhs[0] == rhs[0]; //std::string guaranteed to have at least a null terminator
+    });
+
+    cout << "animals_2 is a permutation of animals_1: " << is_perm << endl; // true
+
+    return 0;
+}
+
+Output
+(1) Compare using built-in == operator: true
+(2) Compare after modifying vec_2: false
+(3) vec_3 is a permutation of vec_4: true
+animals_2 is a permutation of animals_1: true
+
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#is_permutation
