@@ -115,4 +115,4 @@ Test std::find_if() with vector...
 odd integer not found.
 first even integer found: 10
 
-Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#count
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#find_if
