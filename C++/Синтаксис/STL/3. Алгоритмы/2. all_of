@@ -47,4 +47,4 @@ Output
 li = ( 50 40 10 20 20 )
 All the elements are even numbers.
 
-Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#adjacent_find
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#all_of
