@@ -18,4 +18,4 @@ pred
 Эта функция шаблона представляет собой обобщение алгоритма find, заменив предикат "равно определенному значению" любым предикатом. Логические противоположности (найдите первый элемент, удовлетворяющий предикату), см. в разделе find_if.
 Пример кода легко адаптируется к find_if_not().find_if
 
-Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#count
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#find_if_not
