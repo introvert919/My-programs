@@ -1,0 +1,44 @@
+copy_n
+
+Описание
+Копирует указанное количество элементов.
+
+Параметры
+Exec - Используемая политика выполнения.
+First - Входной итератор, указывающий, откуда копировать элементы.
+Count - Целое число со знаком или без знака, указывающее количество копируемых элементов.
+Dest - Выходной итератор, указывающий, куда копировать элементы.
+
+Возвращаемое значение
+Возвращает выходной итератор, куда были скопированы элементы. Он совпадает с возвращаемым значением dest параметра.
+
+Замечания
+Функция шаблона проверяет *(dest + N) = *(first + N)) один раз для каждого N в диапазоне [0, count)строго на увеличение значений N начиная с наименьшего значения. Затем оно возвращает значение dest + N. Если destи first обозначают области хранилища, то dest не должен находиться в диапазоне [first, last).
+
+Пример
+
+// alg_copy_n.cpp
+// compile with: cl /EHsc /W4 alg_copy_n.cpp
+#include <algorithm>
+#include <iostream>
+#include <string>
+
+int main()
+{
+    using namespace std;
+    string s1{"dandelion"};
+    string s2{"badger"};
+
+    cout << s1 << " + " << s2 << " = ";
+
+    // Copy the first 3 letters from s1
+    // to the first 3 positions in s2
+    copy_n(s1.begin(), 3, s2.begin());
+
+    cout << s2 << endl;
+}
+
+Output
+dandelion + badger = danger
+
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#adjacent_find
