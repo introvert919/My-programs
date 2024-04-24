@@ -1,0 +1,145 @@
+iter_swap
+
+Описание
+Меняет местами два значения, указанные парой определенных итераторов.
+
+Параметры
+left
+Один из прямых итераторов, значение которого должно быть изменено.
+right
+Второй из прямых итераторов, значение которого должно быть изменено.
+
+Замечания
+swap следует использовать в предпочтении iter_swap, который был включен в стандарт C++ для обратной совместимости. Если Fit1 итераторы Fit2 перенаправляются, то iter_swap( Fit1, Fit2 )эквивалентен swap( *Fit1, *Fit2 ).
+Типы значений входных прямых итераторов должны иметь одно и то же значение.
+
+Пример
+
+// alg_iter_swap.cpp
+// compile with: /EHsc
+#include <vector>
+#include <deque>
+#include <algorithm>
+#include <iostream>
+#include <ostream>
+
+using namespace std;
+class CInt;
+ostream& operator<<( ostream& osIn, const CInt& rhs );
+
+class CInt
+{
+public:
+    CInt( int n = 0 ) : m_nVal( n ){}
+    CInt( const CInt& rhs ) : m_nVal( rhs.m_nVal ){}
+    CInt&   operator=( const CInt& rhs ) { m_nVal =
+    rhs.m_nVal; return *this; }
+    bool operator<( const CInt& rhs ) const
+        { return ( m_nVal < rhs.m_nVal );}
+    friend ostream& operator<<( ostream& osIn, const CInt& rhs );
+
+private:
+    int m_nVal;
+};
+
+inline ostream& operator<<( ostream& osIn, const CInt& rhs )
+{
+    osIn << "CInt(" << rhs.m_nVal << ")";
+    return osIn;
+}
+
+// Return whether modulus of elem1 is less than modulus of elem2
+bool mod_lesser ( int elem1, int elem2 )
+{
+    if ( elem1 < 0 )
+        elem1 = - elem1;
+    if ( elem2 < 0 )
+        elem2 = - elem2;
+    return elem1 < elem2;
+};
+
+int main()
+{
+    CInt c1 = 5, c2 = 1, c3 = 10;
+    deque<CInt> deq1;
+    deque<CInt>::iterator d1_Iter;
+
+    deq1.push_back ( c1 );
+    deq1.push_back ( c2 );
+    deq1.push_back ( c3 );
+
+    cout << "The original deque of CInts is deq1 = (";
+    for ( d1_Iter = deq1.begin( ); d1_Iter != --deq1.end( ); d1_Iter++ )
+        cout << " " << *d1_Iter << ",";
+    d1_Iter = --deq1.end( );
+    cout << " " << *d1_Iter << " )." << endl;
+
+    // Exchanging first and last elements with iter_swap
+    iter_swap ( deq1.begin( ), --deq1.end( ) );
+
+    cout << "The deque of CInts with first & last elements swapped is:\n deq1 = (";
+    for ( d1_Iter = deq1.begin( ); d1_Iter != --deq1.end( ); d1_Iter++ )
+        cout << " " << *d1_Iter << ",";
+    d1_Iter = --deq1.end( );
+    cout << " " << *d1_Iter << " )." << endl;
+
+    // Swapping back first and last elements with swap
+    swap ( *deq1.begin( ), *(deq1.end( ) -1 ) );
+
+    cout << "The deque of CInts with first & last elements swapped back is:\n deq1 = (";
+    for ( d1_Iter = deq1.begin( ); d1_Iter != --deq1.end( ); d1_Iter++ )
+        cout << " " << *d1_Iter << ",";
+    d1_Iter = --deq1.end( );
+    cout << " " << *d1_Iter << " )." << endl;
+
+    // Swapping a vector element with a deque element
+    vector<int> v1;
+    vector<int>::iterator Iter1;
+    deque<int> deq2;
+    deque<int>::iterator d2_Iter;
+
+    int i;
+    for ( i = 0 ; i <= 3 ; i++ )
+    {
+        v1.push_back( i );
+    }
+
+    int ii;
+    for ( ii = 4 ; ii <= 5 ; ii++ )
+    {
+        deq2.push_back( ii );
+    }
+
+    cout << "Vector v1 is ( " ;
+    for ( Iter1 = v1.begin( ) ; Iter1 != v1.end( ) ; Iter1++ )
+        cout << *Iter1 << " ";
+    cout << ")." << endl;
+
+    cout << "Deque deq2 is ( " ;
+    for ( d2_Iter = deq2.begin( ) ; d2_Iter != deq2.end( ) ; d2_Iter++ )
+        cout << *d2_Iter << " ";
+    cout << ")." << endl;
+
+    iter_swap ( v1.begin( ), deq2.begin( ) );
+
+    cout << "After exchanging first elements,\n vector v1 is: v1 = ( " ;
+    for ( Iter1 = v1.begin( ) ; Iter1 != v1.end( ) ; Iter1++ )
+        cout << *Iter1 << " ";
+    cout << ")." << endl << " & deque deq2 is: deq2 = ( ";
+    for ( d2_Iter = deq2.begin( ) ; d2_Iter != deq2.end( ) ; d2_Iter++ )
+        cout << *d2_Iter << " ";
+    cout << ")." << endl;
+
+Output
+The original deque of CInts is deq1 = ( CInt(5), CInt(1), CInt(10) ).
+The deque of CInts with first & last elements swapped is:
+deq1 = ( CInt(10), CInt(1), CInt(5) ).
+The deque of CInts with first & last elements swapped back is:
+deq1 = ( CInt(5), CInt(1), CInt(10) ).
+Vector v1 is ( 0 1 2 3 ).
+Deque deq2 is ( 4 5 ).
+After exchanging first elements,
+vector v1 is: v1 = ( 4 1 2 3 ).
+& deque deq2 is: deq2 = ( 0 5 ).
+
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#iter_swap
