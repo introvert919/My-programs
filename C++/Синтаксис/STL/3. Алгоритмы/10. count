@@ -1,0 +1,53 @@
+count
+
+Описание
+Возвращает количество элементов в диапазоне, значения которых соответствуют заданному значению.
+
+Параметры
+Exec - Используемая политика выполнения.
+First - Входной итератор, адресующий положение первого элемента в диапазоне для прохода.
+Last - Входной итератор, указывающий позицию, следующую за последним элементом в диапазоне для прохода.
+Value - Значение элементов для подсчета.
+
+Возвращаемое значение
+Тип InputIterator различия, который подсчитывает количество элементов в диапазоне [first, last) с значением value.
+
+Замечания
+operator==, используемый для определения совпадения между элементом и указанным значением, должен применять отношение эквивалентности между своими операндами.
+Этот алгоритм обобщен для подсчета элементов, удовлетворяющих любому предикату с помощью функции count_ifшаблона.
+
+Пример
+
+// alg_count.cpp
+// compile with: /EHsc
+#include <vector>
+#include <algorithm>
+#include <iostream>
+
+int main()
+{
+    using namespace std;
+    vector<int> v1;
+    vector<int>::iterator Iter;
+
+    v1.push_back(10);
+    v1.push_back(20);
+    v1.push_back(10);
+    v1.push_back(40);
+    v1.push_back(10);
+
+    cout << "v1 = ( " ;
+    for (Iter = v1.begin(); Iter != v1.end(); Iter++)
+        cout << *Iter << " ";
+    cout << ")" << endl;
+
+    vector<int>::iterator::difference_type result;
+    result = count(v1.begin(), v1.end(), 10);
+    cout << "The number of 10s in v2 is: " << result << "." << endl;
+}
+
+OutputКопировать
+v1 = ( 10 20 10 40 10 )
+The number of 10s in v2 is: 3.
+
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#count
