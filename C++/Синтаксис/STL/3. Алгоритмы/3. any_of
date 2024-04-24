@@ -47,4 +47,4 @@ Output
 li = ( 51 41 11 21 20 )
 There's an even element in li.
 
-Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#any_of
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#binary_search
