@@ -169,4 +169,4 @@ Vector sorted by the binary predicate shorter_than:
 Result of equal_range with value = fred:
     fun [ cute blah ] fluffy kittens meowmeowmeow
 
-Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#count
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#equal_range
