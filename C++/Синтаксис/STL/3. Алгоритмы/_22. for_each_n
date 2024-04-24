@@ -98,4 +98,4 @@ Multiplying the next 4 elements of the vector v
  by the factor -3 gives:
  vmod2 = ( 8 6 4 3 0 -3 -6 ).
 
-Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#count
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#for_each_n
