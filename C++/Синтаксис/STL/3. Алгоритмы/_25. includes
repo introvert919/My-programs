@@ -1,0 +1,177 @@
+includes
+
+Описание
+Проверяет, содержит ли один отсортированный диапазон все элементы, содержащиеся во втором отсортированном диапазоне, где порядок сортировки или критерий эквивалентности элементов можно задать бинарным предикатом.
+
+Параметры
+exec
+Используемая политика выполнения.
+first1
+Входной итератор, указывающий позицию первого элемента в первом из двух упорядоченных исходных диапазонов, которые должны проверяться на наличие в первом диапазоне всех элементов из второго диапазона.
+last1
+Входной итератор, указывающий позицию, следующую за последним элементом в первом из двух упорядоченных исходных диапазонов, которые должны проверяться на наличие в первом диапазоне всех элементов из второго диапазона.
+first2
+Входной итератор, указывающий позицию первого элемента во втором из двух последовательных упорядоченных исходных диапазонов, которые должны проверяться на наличие в первом диапазоне всех элементов из второго диапазона.
+last2
+Входной итератор, указывающий позицию, следующую за последним элементом во втором из двух последовательных упорядоченных исходных диапазонов, которые должны проверяться на наличие в первом диапазоне всех элементов из второго диапазона.
+pred
+Определяемый пользователем объект функции предиката, задающий условие, когда один элемент меньше другого. Предикат сравнения принимает два аргумента и возвращается true , когда удовлетворено и false когда не удовлетворено.
+
+Возвращаемое значение
+true Значение , если первый отсортированный диапазон содержит все элементы во втором отсортированного диапазона; falseв противном случае .
+
+Замечания
+Можно также представить себе этот тест как проверку, является ли второй исходный диапазон подмножеством первого исходного диапазона.
+Упорядоченные исходные диапазоны, на которые указывают ссылки, должны быть допустимыми. Все указатели должны поддерживать отмену ссылок. В каждой последовательности должна быть возможность достижения последней позиции с первой путем приращения.
+В качестве предусловия для применения алгоритма includesотсортированные диапазоны источников должны быть упорядочены с тем же упорядочением, который используется алгоритмом для сортировки объединенных диапазонов.
+Исходные диапазоны не изменяются алгоритмом merge.
+Типы значений входных итераторов должны быть менее упорядоченными. То есть, учитывая два элемента, можно определить, что одно меньше другого или что они эквивалентны. (Здесь эквивалентно означает, что ни один не меньше другого.) Это сравнение приводит к упорядочению между элементами nonequivalent. Точнее, алгоритм проверяет, имеют ли все элементы в первом отсортированного диапазона в указанном двоичном предикате эквивалентно упорядочивать их во втором отсортированного диапазона.
+Сложность алгоритма является линейной с максимальной 2 * ((last1 - first1) + (last2 - first2)) - 1 степенью сравнения для диапазонов источников nonempty.
+
+Пример
+
+// alg_includes.cpp
+// compile with: /EHsc
+#include <vector>
+#include <algorithm>
+#include <functional>      // For greater<int>( )
+#include <iostream>
+
+// Return whether modulus of elem1 is less than modulus of elem2
+bool mod_lesser (int elem1, int elem2 )
+{
+    if ( elem1 < 0 )
+        elem1 = - elem1;
+    if ( elem2 < 0 )
+        elem2 = - elem2;
+    return elem1 < elem2;
+}
+
+int main()
+{
+    using namespace std;
+    vector<int> v1a, v1b;
+    vector<int>::iterator Iter1a, Iter1b;
+
+    // Constructing vectors v1a & v1b with default less-than ordering
+    int i;
+    for ( i = -2 ; i <= 4 ; i++ )
+    {
+        v1a.push_back( i );
+    }
+
+    int ii;
+    for ( ii =-2 ; ii <= 3 ; ii++ )
+    {
+        v1b.push_back( ii );
+    }
+
+    cout << "Original vector v1a with range sorted by the\n "
+            << "binary predicate less than is v1a = ( " ;
+    for ( Iter1a = v1a.begin( ) ; Iter1a != v1a.end( ) ; Iter1a++ )
+        cout << *Iter1a << " ";
+    cout << ")." << endl;
+
+    cout << "Original vector v1b with range sorted by the\n "
+            << "binary predicate less than is v1b = ( " ;
+    for ( Iter1b = v1b.begin( ) ; Iter1b != v1b.end( ) ; Iter1b++ )
+        cout << *Iter1b << " ";
+    cout << ")." << endl;
+
+    // Constructing vectors v2a & v2b with ranges sorted by greater
+    vector<int> v2a ( v1a ) , v2b ( v1b );
+    vector<int>::iterator Iter2a, Iter2b;
+    sort ( v2a.begin( ), v2a.end( ), greater<int>( ) );
+    sort ( v2b.begin( ), v2b.end( ), greater<int>( ) );
+    v2a.pop_back( );
+
+    cout << "Original vector v2a with range sorted by the\n "
+            << "binary predicate greater is v2a = ( " ;
+    for ( Iter2a = v2a.begin( ) ; Iter2a != v2a.end( ) ; Iter2a++ )
+        cout << *Iter2a << " ";
+    cout << ")." << endl;
+
+    cout << "Original vector v2b with range sorted by the\n "
+            << "binary predicate greater is v2b = ( " ;
+    for ( Iter2b = v2b.begin( ) ; Iter2b != v2b.end( ) ; Iter2b++ )
+        cout << *Iter2b << " ";
+    cout << ")." << endl;
+
+    // Constructing vectors v3a & v3b with ranges sorted by mod_lesser
+    vector<int> v3a ( v1a ), v3b ( v1b ) ;
+    vector<int>::iterator Iter3a, Iter3b;
+    reverse (v3a.begin( ), v3a.end( ) );
+    v3a.pop_back( );
+    v3a.pop_back( );
+    sort ( v3a.begin( ), v3a.end( ), mod_lesser );
+    sort ( v3b.begin( ), v3b.end( ), mod_lesser );
+
+    cout << "Original vector v3a with range sorted by the\n "
+            << "binary predicate mod_lesser is v3a = ( " ;
+    for ( Iter3a = v3a.begin( ) ; Iter3a != v3a.end( ) ; Iter3a++ )
+        cout << *Iter3a << " ";
+    cout << ")." << endl;
+
+    cout << "Original vector v3b with range sorted by the\n "
+            << "binary predicate mod_lesser is v3b = ( " ;
+    for ( Iter3b = v3b.begin( ) ; Iter3b != v3b.end( ) ; Iter3b++ )
+        cout << *Iter3b << " ";
+    cout << ")." << endl;
+
+    // To test for inclusion under an asscending order
+    // with the default binary predicate less<int>( )
+    bool Result1;
+    Result1 = includes ( v1a.begin( ), v1a.end( ),
+        v1b.begin( ), v1b.end( ) );
+    if ( Result1 )
+        cout << "All the elements in vector v1b are "
+            << "contained in vector v1a." << endl;
+    else
+        cout << "At least one of the elements in vector v1b "
+            << "is not contained in vector v1a." << endl;
+
+    // To test for inclusion under descending
+    // order specify binary predicate greater<int>( )
+    bool Result2;
+    Result2 = includes ( v2a.begin( ), v2a.end( ),
+        v2b.begin( ), v2b.end( ), greater<int>( ) );
+    if ( Result2 )
+        cout << "All the elements in vector v2b are "
+            << "contained in vector v2a." << endl;
+    else
+        cout << "At least one of the elements in vector v2b "
+            << "is not contained in vector v2a." << endl;
+
+    // To test for inclusion under a user
+    // defined binary predicate mod_lesser
+    bool Result3;
+    Result3 = includes ( v3a.begin( ), v3a.end( ),
+        v3b.begin( ), v3b.end( ), mod_lesser );
+    if ( Result3 )
+        cout << "All the elements in vector v3b are "
+            << "contained under mod_lesser in vector v3a."
+            << endl;
+    else
+        cout << "At least one of the elements in vector v3b is "
+            << " not contained under mod_lesser in vector v3a."
+            << endl;
+}
+
+Output
+Original vector v1a with range sorted by the
+binary predicate less than is v1a = ( -2 -1 0 1 2 3 4 ).
+Original vector v1b with range sorted by the
+binary predicate less than is v1b = ( -2 -1 0 1 2 3 ).
+Original vector v2a with range sorted by the
+binary predicate greater is v2a = ( 4 3 2 1 0 -1 ).
+Original vector v2b with range sorted by the
+binary predicate greater is v2b = ( 3 2 1 0 -1 -2 ).
+Original vector v3a with range sorted by the
+binary predicate mod_lesser is v3a = ( 0 1 2 3 4 ).
+Original vector v3b with range sorted by the
+binary predicate mod_lesser is v3b = ( 0 -1 1 -2 2 3 ).
+All the elements in vector v1b are contained in vector v1a.
+At least one of the elements in vector v2b is not contained in vector v2a.
+At least one of the elements in vector v3b is not contained under mod_lesser in vector v3a. 
+
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#includes
