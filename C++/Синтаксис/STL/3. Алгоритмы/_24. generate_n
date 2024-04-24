@@ -64,4 +64,4 @@ Output
 vector v is: 5 8 2 -9 6 
 deque dq is: 7 6 9 3 4 
 
-Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#count
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#generate_n
