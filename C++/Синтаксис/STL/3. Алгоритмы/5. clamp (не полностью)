@@ -14,3 +14,5 @@ Pred - Предикат, используемый для сравнения valu
 
 Замечания
 Поведение не определено, если upper меньше lower.
+
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#adjacent_find
