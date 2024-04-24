@@ -129,4 +129,4 @@ v1mod2 = ( 40 30 20 10 0 -10 -20 ).
 The average of the elements of v1 is:
 Average ( v1mod2 ) = 10.
 
-Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#count
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#for_each
