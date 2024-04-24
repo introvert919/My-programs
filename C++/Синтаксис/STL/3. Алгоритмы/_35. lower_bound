@@ -1,0 +1,126 @@
+lower_bound
+
+Описание
+Находит положение первого элемента в упорядоченном диапазоне, которое имеет значение больше или эквивалентно указанному значению. Критерий упорядочения может быть указан двоичным предикатом.
+
+Параметры
+first
+Прямой итератор, адресующий положение первого элемента в диапазоне для поиска.
+last
+Прямой итератор, адресующий положение на единицу после последнего элемента в диапазоне для поиска.
+value
+Значение, чья первая позиция или возможная первая позиция ищется в упорядоченном диапазоне.
+pred
+Определяемый пользователем объект функции предиката, задающий условие, когда один элемент меньше другого. Бинарный предикат принимает два аргумента и возвращает true в случае соответствия и false в случае несоответствия.
+
+Возвращаемое значение
+Переадресация итератора в позиции первого элемента в упорядоченном диапазоне со значением, превышающим или эквивалентным указанному значению. Эквивалентность может быть указана с двоичным предикатом.
+
+Замечания
+Упорядоченный исходный диапазон, на который указывает ссылка, должен быть допустим. Все итераторы должны поддерживать отмену ссылок. В последовательности должна быть возможность достижения последней позиции с первой путем приращения.
+Предварительным условием для использования lower_bound является упорядоченный диапазон, порядок в котором тот же, что и заданный двоичным предикатом.
+Диапазон не изменяется алгоритмом lower_bound.
+Типы значений для итераторов пересылки должны быть меньше, чем сравнимые для упорядочения. То есть, учитывая два элемента, можно определить, что одно меньше другого или что они эквивалентны. (Здесь эквивалентно означает, что ни один не меньше другого.) Это сравнение приводит к упорядочению между элементами nonequivalent.
+Сложность алгоритма — логарифмическая для итераторов случайного доступа итераторов и линейных в противном случае с числом шагов пропорционально (last - first).
+
+Пример
+
+// alg_lower_bound.cpp
+// compile with: /EHsc
+#include <vector>
+#include <algorithm>
+#include <functional>      // greater<int>( )
+#include <iostream>
+
+// Return whether modulus of elem1 is less than modulus of elem2
+bool mod_lesser( int elem1, int elem2 )
+{
+    if ( elem1 < 0 )
+        elem1 = - elem1;
+    if ( elem2 < 0 )
+        elem2 = - elem2;
+    return elem1 < elem2;
+}
+
+int main()
+{
+    using namespace std;
+
+    vector<int> v1;
+    // Constructing vector v1 with default less-than ordering
+    for ( auto i = -1 ; i <= 4 ; ++i )
+    {
+        v1.push_back( i );
+    }
+
+    for ( auto ii =-3 ; ii <= 0 ; ++ii )
+    {
+        v1.push_back( ii );
+    }
+
+    cout << "Starting vector v1 = ( " ;
+    for (const auto &Iter : v1)
+        cout << Iter << " ";
+    cout << ")." << endl;
+
+    sort(v1.begin(), v1.end());
+    cout << "Original vector v1 with range sorted by the\n "
+        << "binary predicate less than is v1 = ( " ;
+    for (const auto &Iter : v1)
+        cout << Iter << " ";
+    cout << ")." << endl;
+
+    // Constructing vector v2 with range sorted by greater
+    vector<int> v2(v1);
+
+    sort(v2.begin(), v2.end(), greater<int>());
+
+    cout << "Original vector v2 with range sorted by the\n "
+        << "binary predicate greater is v2 = ( " ;
+    for (const auto &Iter : v2)
+        cout << Iter << " ";
+    cout << ")." << endl;
+
+    // Constructing vectors v3 with range sorted by mod_lesser
+    vector<int> v3(v1);
+    sort(v3.begin(), v3.end(), mod_lesser);
+
+    cout << "Original vector v3 with range sorted by the\n "
+        << "binary predicate mod_lesser is v3 = ( " ;
+    for (const auto &Iter : v3)
+        cout << Iter << " ";
+    cout << ")." << endl;
+
+    // Demonstrate lower_bound
+
+    vector<int>::iterator Result;
+
+    // lower_bound of 3 in v1 with default binary predicate less<int>()
+    Result = lower_bound(v1.begin(), v1.end(), 3);
+    cout << "The lower_bound in v1 for the element with a value of 3 is: "
+        << *Result << "." << endl;
+
+    // lower_bound of 3 in v2 with the binary predicate greater<int>( )
+    Result = lower_bound(v2.begin(), v2.end(), 3, greater<int>());
+    cout << "The lower_bound in v2 for the element with a value of 3 is: "
+        << *Result << "." << endl;
+
+    // lower_bound of 3 in v3 with the binary predicate mod_lesser
+    Result = lower_bound(v3.begin(), v3.end(), 3, mod_lesser);
+    cout << "The lower_bound in v3 for the element with a value of 3 is: "
+        << *Result << "." << endl;
+}
+
+Output
+Starting vector v1 = ( -1 0 1 2 3 4 -3 -2 -1 0 ).
+Original vector v1 with range sorted by the
+ binary predicate less than is v1 = ( -3 -2 -1 -1 0 0 1 2 3 4 ).
+Original vector v2 with range sorted by the
+ binary predicate greater is v2 = ( 4 3 2 1 0 0 -1 -1 -2 -3 ).
+Original vector v3 with range sorted by the
+ binary predicate mod_lesser is v3 = ( 0 0 -1 -1 1 -2 2 -3 3 4 ).
+The lower_bound in v1 for the element with a value of 3 is: 3.
+The lower_bound in v2 for the element with a value of 3 is: 3.
+The lower_bound in v3 for the element with a value of 3 is: -3.
+
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#lower_bound
