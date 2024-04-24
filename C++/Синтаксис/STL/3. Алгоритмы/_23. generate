@@ -1,0 +1,59 @@
+generate
+
+Описание
+Присваивает значения, создаваемые объектом функции, каждому элементу в диапазоне.
+
+Параметры
+first
+Переадресный итератор в позиции первого элемента в диапазоне, к которому должны быть назначены значения.
+last
+Переадресация итератора в позиции, в которой выполняется последний элемент в диапазоне, к которому должны быть назначены значения.
+gen
+Объект функции, вызываемый без аргументов для создания значений, назначенных каждому из элементов диапазона.
+
+Замечания
+Объект функции вызывается для каждого элемента в диапазоне и не требуется возвращать одно и то же значение при каждом вызове. Например, он может читать данные из файла или ссылаться на локальное состояние и изменять его. Тип результата генератора должен быть преобразован в тип значения вперед итератора для диапазона.
+Диапазон, на который ссылается, должен быть допустимым. Все указатели должны быть разыменовываемыми, и в пределах последовательности последняя позиция должна быть доступной от первого путем добавочного.
+Сложность является линейной, с точными last – first вызовами генератора.
+
+Пример
+
+// alg_generate.cpp
+// compile with: /EHsc
+#include <vector>
+#include <deque>
+#include <algorithm>
+#include <iostream>
+#include <ostream>
+
+int main()
+{
+    using namespace std;
+
+    // Assigning random values to vector integer elements
+    vector<int> v1 ( 5 );
+    vector<int>::iterator Iter1;
+    deque<int> deq1 ( 5 );
+    deque<int>::iterator d1_Iter;
+
+    generate ( v1.begin( ), v1.end( ), rand );
+
+    cout << "Vector v1 is ( " ;
+    for ( Iter1 = v1.begin( ) ; Iter1 != v1.end( ) ; Iter1++ )
+        cout << *Iter1 << " ";
+    cout << ")." << endl;
+
+    // Assigning random values to deque integer elements
+    generate ( deq1.begin( ), deq1.end( ), rand );
+
+    cout << "Deque deq1 is ( " ;
+    for ( d1_Iter = deq1.begin( ) ; d1_Iter != deq1.end( ) ; d1_Iter++ )
+        cout << *d1_Iter << " ";
+    cout << ")." << endl;
+}
+
+Output
+Vector v1 is ( 41 18467 6334 26500 19169 ).
+Deque deq1 is ( 15724 11478 29358 26962 24464 ).
+
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#count
