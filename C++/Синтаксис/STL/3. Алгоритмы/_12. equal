@@ -63,4 +63,4 @@ v1 and v2 are equal: 1
 v1 and v3 are equal: 1
 v1 and v3 are equal with dual-range overload: 0
 
-Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#count
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#equal
