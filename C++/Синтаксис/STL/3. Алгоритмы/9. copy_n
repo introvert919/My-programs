@@ -41,4 +41,4 @@ int main()
 Output
 dandelion + badger = danger
 
-Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#adjacent_find
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#copy_n
