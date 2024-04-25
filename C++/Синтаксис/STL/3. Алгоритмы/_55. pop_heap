@@ -1,0 +1,95 @@
+pop_heap
+
+Описание
+Удаляет наибольший элемент из начала кучи до позиции, следующей за последней, в диапазоне, а затем формирует новую кучу из оставшихся элементов.
+
+Параметры
+first
+Итератор произвольного доступа, обращающийся к позиции первого элемента в куче.
+last
+Итератор произвольного доступа, обращающийся к позиции, следующей за последним элементом в куче.
+pred
+Определяемый пользователем объект функции предиката, задающий условие, когда один элемент меньше другого. Бинарный предикат принимает два аргумента и возвращает true в случае соответствия и false в случае несоответствия.
+
+Замечания
+Алгоритм pop_heap представляет операцию, противоположную выполняемой алгоритмом push_heap, в которой элемент в позиции, следующей за последним элементом в диапазоне, добавляется в кучу, состоящую из предыдущих элементов в диапазоне, в том случае, когда элемент, добавляемый в кучу, больше, чем любые элементы, уже находящиеся в куче.
+Кучи имеют два следующих свойства.
+Первый элемент — всегда наибольший.
+Элементы могут добавляться и удаляться в логарифмическое время.
+Кучи — это идеальный способ реализации очередей приоритетов, и они используются в реализации адаптера контейнера стандартной библиотеки C++ priority_queue класса.
+Указанный диапазон должен быть допустимым. Все указатели должны поддерживать удаление ссылок, а последняя позиция в последовательности должна быть доступна из первой позиции за счет увеличения на один.
+Диапазон, исключая только что добавленный в конце элемент, должен быть кучей.
+Сложность — логарифмическая, требующая большинства log (last - first) сравнений.
+
+Пример
+
+// alg_pop_heap.cpp
+// compile with: /EHsc
+#include <vector>
+#include <algorithm>
+#include <functional>
+#include <iostream>
+
+int main()
+{
+    using namespace std;
+    vector<int> v1;
+    vector<int>::iterator Iter1, Iter2;
+
+    int i;
+    for ( i = 1 ; i <= 9 ; i++ )
+        v1.push_back( i );
+
+    // Make v1 a heap with default less than ordering
+    random_shuffle( v1.begin( ), v1.end( ) );
+    make_heap ( v1.begin( ), v1.end( ) );
+    cout << "The heaped version of vector v1 is ( " ;
+    for ( Iter1 = v1.begin( ) ; Iter1 != v1.end( ) ; Iter1++ )
+        cout << *Iter1 << " ";
+    cout << ")." << endl;
+
+    // Add an element to the back of the heap
+    v1.push_back( 10 );
+    push_heap( v1.begin( ), v1.end( ) );
+    cout << "The reheaped v1 with 10 added is ( " ;
+    for ( Iter1 = v1.begin( ) ; Iter1 != v1.end( ) ; Iter1++ )
+        cout << *Iter1 << " ";
+    cout << ")." << endl;
+
+    // Remove the largest element from the heap
+    pop_heap( v1.begin( ), v1.end( ) );
+    cout << "The heap v1 with 10 removed is ( " ;
+    for ( Iter1 = v1.begin( ) ; Iter1 != v1.end( ) ; Iter1++ )
+        cout << *Iter1 << " ";
+    cout << ")." << endl << endl;
+
+    // Make v1 a heap with greater-than ordering with a 0 element
+    make_heap ( v1.begin( ), v1.end( ), greater<int>( ) );
+    v1.push_back( 0 );
+    push_heap( v1.begin( ), v1.end( ), greater<int>( ) );
+    cout << "The 'greater than' reheaped v1 puts the smallest "
+        << "element first:\n ( " ;
+    for ( Iter1 = v1.begin( ) ; Iter1 != v1.end( ) ; Iter1++ )
+        cout << *Iter1 << " ";
+    cout << ")." << endl;
+
+    // Application of pop_heap to remove the smallest element
+    pop_heap( v1.begin( ), v1.end( ), greater<int>( ) );
+    cout << "The 'greater than' heaped v1 with the smallest element\n "
+        << "removed from the heap is: ( " ;
+    for ( Iter1 = v1.begin( ) ; Iter1 != v1.end( ) ; Iter1++ )
+        cout << *Iter1 << " ";
+    cout << ")." << endl;
+}
+
+Output
+The heaped version of vector v1 is ( 9 7 8 5 1 6 3 2 4 ).
+The reheaped v1 with 10 added is ( 10 9 8 5 7 6 3 2 4 1 ).
+The heap v1 with 10 removed is ( 9 7 8 5 1 6 3 2 4 10 ).
+
+The 'greater than' reheaped v1 puts the smallest element first:
+ ( 0 1 3 4 2 6 8 5 9 10 7 ).
+The 'greater than' heaped v1 with the smallest element
+ removed from the heap is: ( 1 2 3 4 7 6 8 5 9 10 0 ).
+
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#pop_heap
