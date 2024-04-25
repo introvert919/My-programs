@@ -1,0 +1,83 @@
+remove_if
+
+Описание
+Устраняет элементы, удовлетворяющие предикату из заданного диапазона, не нарушая порядок оставшихся элементов. Возвращает конец нового диапазона, свободного от указанного значения.
+
+Параметры
+exec
+Используемая политика выполнения.
+first
+Прямой итератор, указывающий на позицию первого элемента в диапазоне, из которого удаляются элементы.
+last
+Прямой итератор, указывающий на позицию, следующую за последним элементом в диапазоне, из которого удаляются элементы.
+pred
+Унарный предикат, который должен быть удовлетворен, является значением заменяемого элемента.
+
+Возвращаемое значение
+Прямой итератор, обращающийся к новой конечной позиции измененного диапазона сразу за последним элементом оставшейся последовательности без указанного значения.
+
+Замечания
+Указанный диапазон должен быть допустимым. Все указатели должны поддерживать удаление ссылок, а последняя позиция в последовательности должна быть доступна из первой позиции за счет увеличения на один.
+Порядок неудаляемых элементов не меняется.
+Оператор operator== , который используется для определения равенства между элементами, должен применить отношение эквивалентности между операндами.
+Сложность является линейной. Это делает (last - first) сравнения для равенства.
+Класс list содержит более эффективную версию функции-члена remove, которая удаляет ссылки для указателей.
+
+Пример
+
+// alg_remove_if.cpp
+// compile with: /EHsc
+#include <vector>
+#include <algorithm>
+#include <iostream>
+
+bool greater6 ( int value )
+{
+    return value > 6;
+}
+
+int main()
+{
+    using namespace std;
+    vector<int> v1, v2;
+    vector<int>::iterator Iter1, Iter2, new_end;
+
+    int i;
+    for ( i = 0 ; i <= 9 ; i++ )
+        v1.push_back( i );
+
+    int ii;
+    for ( ii = 0 ; ii <= 3 ; ii++ )
+        v1.push_back( 7 );
+
+    random_shuffle ( v1.begin( ), v1.end( ) );
+    cout << "Vector v1 is ( " ;
+    for ( Iter1 = v1.begin( ) ; Iter1 != v1.end( ) ; Iter1++ )
+        cout << *Iter1 << " ";
+    cout << ")." << endl;
+
+    // Remove elements satisfying predicate greater6
+    new_end = remove_if (v1.begin( ), v1.end( ), greater6 );
+
+    cout << "Vector v1 with elements satisfying greater6 removed is\n ( " ;
+    for ( Iter1 = v1.begin( ) ; Iter1 != v1.end( ) ; Iter1++ )
+        cout << *Iter1 << " ";
+    cout << ")." << endl;
+
+    // To change the sequence size, use erase
+    v1.erase (new_end, v1.end( ) );
+
+    cout << "Vector v1 resized elements satisfying greater6 removed is\n ( " ;
+    for ( Iter1 = v1.begin( ) ; Iter1 != v1.end( ) ; Iter1++ )
+        cout << *Iter1 << " ";
+    cout << ")." << endl;
+}
+
+Output
+Vector v1 is ( 4 7 7 7 0 5 7 1 6 9 3 7 8 2 ).
+Vector v1 with elements satisfying greater6 removed is
+ ( 4 0 5 1 6 3 2 1 6 9 3 7 8 2 ).
+Vector v1 resized elements satisfying greater6 removed is
+ ( 4 0 5 1 6 3 2 ).
+
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#remove_if
