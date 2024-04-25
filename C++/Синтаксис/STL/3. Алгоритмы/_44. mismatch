@@ -1,0 +1,120 @@
+mismatch
+
+Описание
+Сравнивает поэлементно два диапазона и находит первую позицию, где элементы отличаются.
+Используйте перегрузки двойного диапазона в коде C++14, так как перегрузки, которые принимают только один итератор для второго диапазона, не будут обнаруживать различия, если второй диапазон длиннее первого диапазона. Эти перегрузки будут привести к неопределенному поведению, если второй диапазон короче первого диапазона.
+
+Параметры
+exec
+Используемая политика выполнения.
+first1
+Входной итератор, указывающий на положение первого элемента в первом диапазоне для тестирования.
+last1
+Входной итератор, указывающий на положение, следующее за последним элементом, в первом диапазоне для тестирования.
+first2
+Входной итератор, указывающий на положение первого элемента во втором диапазоне для тестирования.
+last2
+Входной итератор, указывающий на положение, следующее за последним элементом, во втором диапазоне для тестирования.
+pred
+Определяемый пользователем объект функции предиката, который сравнивает текущие элементы в каждом диапазоне и определяет, эквивалентны ли они. Он возвращается true , когда удовлетворено и false когда оно не удовлетворено.
+
+Возвращаемое значение
+Возвращает пару итераторов, обращаюющихся к позициям несоответствия в двух диапазонах. Первый итератор компонента указывает на позицию в первом диапазоне. Второй итератор компонента указывает на позицию во втором диапазоне. Если нет разницы между элементами в диапазонах по сравнению или если двоичное предикат во второй версии удовлетворено всеми парами элементов из двух диапазонов, то первый итератор компонента указывает на позицию, последнюю часть последнего элемента в первом диапазоне, а второй итератор компонента указывает на позицию, которую последний элемент тестируется во втором диапазоне.
+
+Замечания
+При выполнении первой функции шаблона предполагается, что в диапазоне, начинающемся с first2, имеется столько же элементов, сколько в диапазоне, указанном аргументами [first1, last1). Если в втором диапазоне больше, они игнорируются; Если есть меньше, то неопределенное поведение приведет к возникновению.
+Диапазон, по которому ведется поиск, должен быть допустимым. Все итераторы должны поддерживать сброс ссылок и должна быть возможность достижения последнего положения, начиная от первого, путем приращения.
+Временная сложность алгоритма линейно зависит от количества элементов в более коротком диапазоне.
+Определяемый пользователем предикат не требуется для того, чтобы навязать отношение эквивалентности, которое симметрично, рефлексивно и транзитивно между операндами.
+
+Пример
+В следующем примере демонстрируется использование несовпадения. Перегрузка C++ 03 показана только с целью демонстрации того, как она может привести к непредвиденному результату.
+
+#include <vector>
+#include <list>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <utility>
+
+using namespace std;
+
+// Return whether first element is twice the second
+// Note that this isn't a symmetric, reflexive, and transitive equivalence.
+// mismatch and equal accept such predicates, but is_permutation doesn't.
+bool twice(int elem1, int elem2)
+{
+    return elem1 == elem2 * 2;
+}
+
+void PrintResult(const string& msg, const pair<vector<int>::iterator, vector<int>::iterator>& result,
+    const vector<int>& left, const vector<int>& right)
+{
+    // If either iterator stops before reaching the end of its container,
+    // it means a mismatch was detected.
+    if (result.first != left.end() || result.second != right.end())
+    {
+        string leftpos(result.first == left.end() ? "end" : to_string(*result.first));
+        string rightpos(result.second == right.end() ? "end" : to_string(*result.second));
+        cout << msg << "mismatch. Left iterator at " << leftpos
+            << " right iterator at " << rightpos << endl;
+    }
+    else
+    {
+        cout << msg << " match." << endl;
+    }
+}
+
+int main()
+{
+    vector<int> vec_1{ 0, 5, 10, 15, 20, 25 };
+    vector<int> vec_2{ 0, 5, 10, 15, 20, 25, 30 };
+
+    // Testing different length vectors for mismatch (C++03)
+    auto match_vecs = mismatch(vec_1.begin(), vec_1.end(), vec_2.begin());
+    bool is_mismatch = match_vecs.first != vec_1.end();
+    cout << "C++03: vec_1 and vec_2 are a mismatch: " << boolalpha << is_mismatch << endl;
+
+    // Using dual-range overloads:
+
+    // Testing different length vectors for mismatch (C++14)
+    match_vecs = mismatch(vec_1.begin(), vec_1.end(), vec_2.begin(), vec_2.end());
+    PrintResult("C++14: vec_1 and vec_2: ", match_vecs, vec_1, vec_2);
+
+    // Identify point of mismatch between vec_1 and modified vec_2.
+    vec_2[3] = 42;
+    match_vecs = mismatch(vec_1.begin(), vec_1.end(), vec_2.begin(), vec_2.end());
+    PrintResult("C++14 vec_1 v. vec_2 modified: ", match_vecs, vec_1, vec_2);
+
+    // Test vec_3 and vec_4 for mismatch under the binary predicate twice (C++14)
+    vector<int> vec_3{ 10, 20, 30, 40, 50, 60 };
+    vector<int> vec_4{ 5, 10, 15, 20, 25, 30 };
+    match_vecs = mismatch(vec_3.begin(), vec_3.end(), vec_4.begin(), vec_4.end(), twice);
+    PrintResult("vec_3 v. vec_4 with pred: ", match_vecs, vec_3, vec_4);
+
+    vec_4[5] = 31;
+    match_vecs = mismatch(vec_3.begin(), vec_3.end(), vec_4.begin(), vec_4.end(), twice);
+    PrintResult("vec_3 v. modified vec_4 with pred: ", match_vecs, vec_3, vec_4);
+
+    // Compare a vector<int> to a list<int>
+    list<int> list_1{ 0, 5, 10, 15, 20, 25 };
+    auto match_vec_list = mismatch(vec_1.begin(), vec_1.end(), list_1.begin(), list_1.end());
+    is_mismatch = match_vec_list.first != vec_1.end() || match_vec_list.second != list_1.end();
+    cout << "vec_1 and list_1 are a mismatch: " << boolalpha << is_mismatch << endl;
+
+    char c;
+    cout << "Press a key" << endl;
+    cin >> c;
+
+}
+
+Output
+C++03: vec_1 and vec_2 are a mismatch: false
+C++14: vec_1 and vec_2: mismatch. Left iterator at end right iterator at 30
+C++14 vec_1 v. vec_2 modified: mismatch. Left iterator at 15 right iterator at 42
+C++14 vec_3 v. vec_4 with pred: match.
+C++14 vec_3 v. modified vec_4 with pred: mismatch. Left iterator at 60 right iterator at 31
+C++14: vec_1 and list_1 are a mismatch: false
+Press a key
+
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#mismatch
