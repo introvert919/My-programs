@@ -1,0 +1,111 @@
+unique
+
+Описание
+Удаляет повторяющиеся элементы, которые находятся рядом друг с другом в указанном диапазоне.
+
+Параметры
+exec
+Используемая политика выполнения.
+first
+Прямой итератор, указывающий позицию первого элемента в диапазоне, который должен проверяться для поиска и удаления дубликатов.
+last
+Прямой итератор, указывающий позицию, следующую за последним элементом в диапазоне, который должен проверяться для поиска и удаления дубликатов.
+pred
+Заданный пользователем объект функции предиката, определяющий условие, которое должно выполняться, чтобы два элемента считались эквивалентными друг другу. Бинарный предикат принимает два аргумента и возвращает true в случае соответствия и false в случае несоответствия.
+
+Возвращаемое значение
+Прямой итератор в новый конец измененной последовательности, которая не содержит последовательных дубликатов, указывающий позицию, следующую за последним неудаленным элементом.
+
+Замечания
+Обе формы алгоритма удаляют второй дубликат последовательной пары равных элементов.
+Операция алгоритма стабильна, чтобы относительный порядок незавершенных элементов не изменялся.
+Указанный диапазон должен быть допустимым. Все указатели должны поддерживать удаление ссылок, а последняя позиция в последовательности должна быть доступна из первой позиции за счет увеличения на один. Количество элементов в последовательности не изменяется алгоритмом unique , а элементы за пределами измененной последовательности разыменовываются, но не указаны.
+Сложность является линейной, требующей (last - first) - 1 сравнения.
+В классе list имеется более эффективная функция-член unique, которая может работать лучше.
+Эти алгоритмы нельзя использовать в ассоциативном контейнере.
+
+Пример
+
+// alg_unique.cpp
+// compile with: /EHsc
+#include <vector>
+#include <algorithm>
+#include <functional>
+#include <iostream>
+#include <ostream>
+
+using namespace std;
+
+// Return whether modulus of elem1 is equal to modulus of elem2
+bool mod_equal ( int elem1, int elem2 )
+{
+    if ( elem1 < 0 )
+        elem1 = - elem1;
+    if ( elem2 < 0 )
+        elem2 = - elem2;
+    return elem1 == elem2;
+};
+
+int main()
+{
+    vector<int> v1;
+    vector<int>::iterator v1_Iter1, v1_Iter2, v1_Iter3,
+            v1_NewEnd1, v1_NewEnd2, v1_NewEnd3;
+
+    int i;
+    for ( i = 0 ; i <= 3 ; i++ )
+    {
+        v1.push_back( 5 );
+        v1.push_back( -5 );
+    }
+
+    int ii;
+    for ( ii = 0 ; ii <= 3 ; ii++ )
+    {
+        v1.push_back( 4 );
+    }
+    v1.push_back( 7 );
+
+    cout << "Vector v1 is ( " ;
+    for ( v1_Iter1 = v1.begin( ) ; v1_Iter1 != v1.end( ) ; v1_Iter1++ )
+        cout << *v1_Iter1 << " ";
+    cout << ")." << endl;
+
+    // Remove consecutive duplicates
+    v1_NewEnd1 = unique ( v1.begin( ), v1.end( ) );
+
+    cout << "Removing adjacent duplicates from vector v1 gives\n ( " ;
+    for ( v1_Iter1 = v1.begin( ) ; v1_Iter1 != v1_NewEnd1 ; v1_Iter1++ )
+        cout << *v1_Iter1 << " ";
+    cout << ")." << endl;
+
+    // Remove consecutive duplicates under the binary prediate mod_equals
+    v1_NewEnd2 = unique ( v1.begin( ), v1_NewEnd1 , mod_equal );
+
+    cout << "Removing adjacent duplicates from vector v1 under the\n "
+            << " binary predicate mod_equal gives\n ( " ;
+    for ( v1_Iter2 = v1.begin( ) ; v1_Iter2 != v1_NewEnd2 ; v1_Iter2++ )
+        cout << *v1_Iter2 << " ";
+    cout << ")." << endl;
+
+    // Remove elements if preceded by an element that was greater
+    v1_NewEnd3 = unique ( v1.begin( ), v1_NewEnd2, greater<int>( ) );
+
+    cout << "Removing adjacent elements satisfying the binary\n "
+            << " predicate greater<int> from vector v1 gives ( " ;
+    for ( v1_Iter3 = v1.begin( ) ; v1_Iter3 != v1_NewEnd3 ; v1_Iter3++ )
+        cout << *v1_Iter3 << " ";
+    cout << ")." << endl;
+}
+
+Output
+Vector v1 is ( 5 -5 5 -5 5 -5 5 -5 4 4 4 4 7 ).
+Removing adjacent duplicates from vector v1 gives
+( 5 -5 5 -5 5 -5 5 -5 4 7 ).
+Removing adjacent duplicates from vector v1 under the
+  binary predicate mod_equal gives
+( 5 4 7 ).
+Removing adjacent elements satisfying the binary
+  predicate greater<int> from vector v1 gives ( 5 7 ).
+
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#unique
