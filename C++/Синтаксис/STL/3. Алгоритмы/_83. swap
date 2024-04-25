@@ -1,0 +1,68 @@
+swap
+
+Описание
+Первое переопределение меняет местами значения двух объектов. Второе переопределение меняет местами значения двух массивов объектов.
+
+Параметры
+left
+Для первого переопределения — первый объект для обмена его содержимого. Для второго переопределения — первый массив для обмена его содержимого.
+right
+Для первого переопределения — второй объект для обмена его содержимого. Для второго переопределения — второй массив для обмена его содержимого.
+
+Замечания
+Первая перегрузка предназначена для работы с отдельными объектами. Вторая перегрузка меняет местами содержимое объектов в двух массивах.
+
+Пример
+
+// alg_swap.cpp
+// compile with: /EHsc
+#include <vector>
+#include <algorithm>
+#include <iostream>
+
+int main()
+{
+    using namespace std;
+    vector<int> v1, v2;
+    vector<int>::iterator Iter1, Iter2, result;
+
+    for ( int i = 0 ; i <= 10 ; i++ )
+    {
+        v1.push_back( i );
+    }
+
+    for ( int ii = 0 ; ii <= 4 ; ii++ )
+    {
+        v2.push_back( 5 );
+    }
+
+    cout << "Vector v1 is ( " ;
+    for ( Iter1 = v1.begin( ) ; Iter1 != v1.end( ) ; Iter1++ )
+        cout << *Iter1 << " ";
+    cout << ")." << endl;
+
+    cout << "Vector v2 is ( " ;
+    for ( Iter2 = v2.begin( ) ; Iter2 != v2.end( ) ; Iter2++ )
+        cout << *Iter2 << " ";
+    cout << ")." << endl;
+
+    swap( v1, v2 );
+
+    cout << "Vector v1 is ( " ;
+    for ( Iter1 = v1.begin( ) ; Iter1 != v1.end( ) ; Iter1++ )
+        cout << *Iter1 << " ";
+    cout << ")." << endl;
+
+    cout << "Vector v2 is ( " ;
+    for ( Iter2 = v2.begin( ) ; Iter2 != v2.end( ) ; Iter2++ )
+        cout << *Iter2 << " ";
+    cout << ")." << endl;
+}
+
+Output
+Vector v1 is ( 0 1 2 3 4 5 6 7 8 9 10 ).
+Vector v2 is ( 5 5 5 5 5 ).
+Vector v1 is ( 5 5 5 5 5 ).
+Vector v2 is ( 0 1 2 3 4 5 6 7 8 9 10 ).
+
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#swap
