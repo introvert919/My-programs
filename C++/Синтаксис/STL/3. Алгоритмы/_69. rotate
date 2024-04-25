@@ -1,0 +1,92 @@
+rotate
+
+Описание
+Меняет местами элементы в двух соседних диапазонах.
+
+Параметры
+exec
+Используемая политика выполнения.
+first
+Прямой итератор, указывающий на позицию первого элемента в диапазоне для изменения места.
+middle
+Итератор пересылки, определяющий границу в диапазоне, который обращается к позиции первого элемента во второй части диапазона, элементы которого необходимо обмениваться с элементами в первой части диапазона.
+last
+Прямой итератор, указывающий на позицию, следующую за последним элементом в диапазоне для изменения места.
+
+Замечания
+Указанные диапазоны должны быть допустимыми. Все указатели должны поддерживать удаление ссылок, а последняя позиция в последовательности должна быть доступна из первой позиции за счет увеличения на один.
+Сложность является линейной. Он делает не более (last - first) переключения.
+
+Пример
+
+// alg_rotate.cpp
+// compile with: /EHsc
+#include <vector>
+#include <deque>
+#include <algorithm>
+#include <iostream>
+
+int main() {
+    using namespace std;
+    vector<int> v1;
+    deque<int> d1;
+    vector<int>::iterator v1Iter1;
+    deque<int>::iterator d1Iter1;
+
+    int i;
+    for ( i = -3 ; i <= 5 ; i++ )
+    {
+        v1.push_back( i );
+    }
+
+    int ii;
+    for ( ii =0 ; ii <= 5 ; ii++ )
+    {
+        d1.push_back( ii );
+    }
+
+    cout << "Vector v1 is ( " ;
+    for ( v1Iter1 = v1.begin( ) ; v1Iter1 != v1.end( ) ;v1Iter1 ++ )
+        cout << *v1Iter1 << " ";
+    cout << ")." << endl;
+
+    rotate ( v1.begin( ), v1.begin( ) + 3 , v1.end( ) );
+    cout << "After rotating, vector v1 is ( " ;
+    for ( v1Iter1 = v1.begin( ) ; v1Iter1 != v1.end( ) ;v1Iter1 ++ )
+        cout << *v1Iter1 << " ";
+    cout << ")." << endl;
+
+    cout << "The original deque d1 is ( " ;
+    for ( d1Iter1 = d1.begin( ) ; d1Iter1 != d1.end( ) ;d1Iter1 ++ )
+        cout << *d1Iter1 << " ";
+    cout << ")." << endl;
+
+    int iii = 1;
+    while ( iii <= d1.end( ) - d1.begin( ) ) {
+        rotate ( d1.begin( ), d1.begin( ) + 1 , d1.end( ) );
+        cout << "After the rotation of a single deque element to the back,\n d1 is   ( " ;
+        for ( d1Iter1 = d1.begin( ) ; d1Iter1 != d1.end( ) ;d1Iter1 ++ )
+            cout << *d1Iter1 << " ";
+        cout << ")." << endl;
+        iii++;
+    }
+}
+
+Output
+Vector v1 is ( -3 -2 -1 0 1 2 3 4 5 ).
+After rotating, vector v1 is ( 0 1 2 3 4 5 -3 -2 -1 ).
+The original deque d1 is ( 0 1 2 3 4 5 ).
+After the rotation of a single deque element to the back,
+d1 is   ( 1 2 3 4 5 0 ).
+After the rotation of a single deque element to the back,
+d1 is   ( 2 3 4 5 0 1 ).
+After the rotation of a single deque element to the back,
+d1 is   ( 3 4 5 0 1 2 ).
+After the rotation of a single deque element to the back,
+d1 is   ( 4 5 0 1 2 3 ).
+After the rotation of a single deque element to the back,
+d1 is   ( 5 0 1 2 3 4 ).
+After the rotation of a single deque element to the back,
+d1 is   ( 0 1 2 3 4 5 ).
+
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#rotate
