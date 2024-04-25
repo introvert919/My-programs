@@ -1,0 +1,107 @@
+unique_copy
+
+Описание
+Копирует элементы из исходного диапазона в диапазон назначения, за исключением повторяющихся элементов, которые находятся рядом друг с другом.
+
+Параметры
+exec
+Используемая политика выполнения.
+first
+Прямой итератор, указывающий на позицию первого элемента в исходном диапазоне для копирования.
+last
+Прямой итератор, указывающий на позицию, следующую за последним элементом в исходном диапазоне для копирования.
+result
+Выходной итератор, указывающий на позицию первого элемента в диапазоне назначения, получающем копию с последовательными удаленными дубликатами.
+pred
+Заданный пользователем объект функции предиката, определяющий условие, которое должно выполняться, чтобы два элемента считались эквивалентными друг другу. Бинарный предикат принимает два аргумента и возвращает true в случае соответствия и false в случае несоответствия.
+
+Возвращаемое значение
+Выходной итератор, указывающий на позицию, следующую за последним элементом в диапазоне назначения, получающем копию с последовательными удаленными дубликатами.
+
+Замечания
+Обе формы алгоритма удаляют второй дубликат последовательной пары равных элементов.
+Операция алгоритма стабильна, чтобы относительный порядок незавершенных элементов не изменялся.
+Диапазоны, на которые указывают ссылки, должны быть допустимыми. Все указатели должны поддерживать сброс ссылок. В каждой последовательности должна быть возможность достижения последнего положения с первого путем приращения.
+Сложность является линейной, требующейlast - first () сравнения.
+
+Пример
+
+// alg_unique_copy.cpp
+// compile with: /EHsc
+#include <vector>
+#include <algorithm>
+#include <functional>
+#include <iostream>
+#include <ostream>
+
+using namespace std;
+
+// Return whether modulus of elem1 is equal to modulus of elem2
+bool mod_equal ( int elem1, int elem2 ) {
+    if ( elem1 < 0 )
+        elem1 = - elem1;
+    if ( elem2 < 0 )
+        elem2 = - elem2;
+    return elem1 == elem2;
+};
+
+int main() {
+    vector<int> v1;
+    vector<int>::iterator v1_Iter1, v1_Iter2,
+            v1_NewEnd1, v1_NewEnd2;
+
+    int i;
+    for ( i = 0 ; i <= 1 ; i++ ) {
+        v1.push_back( 5 );
+        v1.push_back( -5 );
+    }
+
+    int ii;
+    for ( ii = 0 ; ii <= 2 ; ii++ )
+        v1.push_back( 4 );
+    v1.push_back( 7 );
+
+    int iii;
+    for ( iii = 0 ; iii <= 5 ; iii++ )
+        v1.push_back( 10 );
+
+    cout << "Vector v1 is\n ( " ;
+    for ( v1_Iter1 = v1.begin( ) ; v1_Iter1 != v1.end( ) ; v1_Iter1++ )
+        cout << *v1_Iter1 << " ";
+    cout << ")." << endl;
+
+    // Copy first half to second, removing consecutive duplicates
+    v1_NewEnd1 = unique_copy ( v1.begin( ), v1.begin( ) + 8, v1.begin( ) + 8 );
+
+    cout << "Copying the first half of the vector to the second half\n "
+            << "while removing adjacent duplicates gives\n ( " ;
+    for ( v1_Iter1 = v1.begin( ) ; v1_Iter1 != v1_NewEnd1 ; v1_Iter1++ )
+        cout << *v1_Iter1 << " ";
+    cout << ")." << endl;
+
+    int iv;
+    for ( iv = 0 ; iv <= 7 ; iv++ )
+        v1.push_back( 10 );
+
+    // Remove consecutive duplicates under the binary prediate mod_equals
+    v1_NewEnd2 = unique_copy ( v1.begin( ), v1.begin( ) + 14,
+        v1.begin( ) + 14 , mod_equal );
+
+    cout << "Copying the first half of the vector to the second half\n "
+            << " removing adjacent duplicates under mod_equals gives\n ( " ;
+    for ( v1_Iter2 = v1.begin( ) ; v1_Iter2 != v1_NewEnd2 ; v1_Iter2++ )
+        cout << *v1_Iter2 << " ";
+    cout << ")." << endl;
+}
+
+Output
+Vector v1 is
+ ( 5 -5 5 -5 4 4 4 7 10 10 10 10 10 10 ).
+Copying the first half of the vector to the second half
+ while removing adjacent duplicates gives
+ ( 5 -5 5 -5 4 4 4 7 5 -5 5 -5 4 7 ).
+Copying the first half of the vector to the second half
+  removing adjacent duplicates under mod_equals gives
+ ( 5 -5 5 -5 4 4 4 7 5 -5 5 -5 4 7 5 4 7 5 4 7 ).
+
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#unique_copy
