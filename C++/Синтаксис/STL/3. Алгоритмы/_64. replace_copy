@@ -1,0 +1,99 @@
+replace_copy
+
+Описание
+Проверяет каждый элемент в исходном диапазоне и заменяет его, если он соответствует заданному значению, одновременно копируя результат в новый диапазон назначения.
+
+Параметры
+exec
+Используемая политика выполнения.
+first
+Входной итератор, указывающий на позицию первого элемента в диапазоне, в котором заменяются элементы.
+last
+Входной итератор, указывающий на позицию, следующую за последним элементом в диапазоне, в котором заменяются элементы.
+result
+Выходной итератор, указывающий на первый элемент в диапазоне назначения, в который копируется измененная последовательность элементов.
+oldVal
+Старое значение заменяемых элементов.
+newVal
+Новое значение, присваиваемое элементам со старым значением.
+
+Возвращаемое значение
+Выходной итератор, указывающий на позицию, вложенную в конечный элемент в целевом диапазоне, копируется измененная последовательность элементов.
+
+Замечания
+Исходный и конечный диапазоны, на которые указывают ссылки, не должны перекрываться и должны быть допустимыми. Все указатели должны поддерживать удаление ссылок, а последняя позиция в последовательности должна быть доступна из первой позиции за счет увеличения на один.
+Порядок незаменяемых элементов не меняется.
+Оператор operator== , который используется для определения равенства между элементами, должен применить отношение эквивалентности между операндами.
+Сложность является линейной. Он делает (last - first) сравнения для равенства и по крайней мере (last - first) назначений новых значений.
+
+Пример
+
+// alg_replace_copy.cpp
+// compile with: /EHsc
+#include <vector>
+#include <list>
+#include <algorithm>
+#include <iostream>
+
+int main()
+{
+    using namespace std;
+    vector<int> theVector;
+    list<int> theList(15);
+
+    for (int i = 0; i <= 9; i++)
+    {
+        theVector.push_back(i);
+    }
+
+    for (int i = 0; i <= 3; i++)
+    {
+        theVector.push_back(7);
+    }
+
+    random_shuffle(theVector.begin(), theVector.end());
+        
+    for (int i = 0; i <= 15; i++)
+    {
+        theVector.push_back(1);
+    }
+
+    cout << "The shuffled vector:\n ( ";
+    for (auto iter = theVector.begin(); iter != theVector.end(); iter++)
+    {
+        cout << *iter << " ";
+    }
+    cout << ")." << endl;
+
+    // Replace the 7s in part of the vector with 70s
+    // and copy into another part of the vector
+    replace_copy(theVector.begin(), theVector.begin() + 14, theVector.end() - 15, 7, 70);
+
+    cout << "The vector with instances of 7 replaced with 70 starting at position 14:\n ( ";
+    for (auto iter = theVector.begin(); iter != theVector.end(); iter++)
+    {
+        cout << *iter << " ";
+    }
+    cout << ")." << endl;
+
+    // Replace 7s found in the first 14 positions in the vector with 1s and then copy the result into a list
+    replace_copy(theVector.begin(), theVector.begin() + 14, theList.begin(), 7, 1);
+
+    cout << "List containing the contents of the vector but 7s replaced with 1s.\n ( ";
+    for (auto iter = theList.begin(); iter != theList.end(); iter++)
+    {
+        cout << *iter << " ";
+    }
+    cout << ")." << endl;
+}
+Из-за вызова в предыдущем коде выходные random_shuffle() данные могут отличаться.
+
+Output
+The shuffled vector:
+ ( 7 1 9 2 0 7 7 3 4 6 8 5 7 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ).
+The vector with instances of 7 replaced with 70 starting at position 14:
+ ( 7 1 9 2 0 7 7 3 4 6 8 5 7 7 1 70 1 9 2 0 70 70 3 4 6 8 5 70 70 1 ).
+List containing the contents of the vector but 7s replaced with 1s.
+ ( 1 1 9 2 0 1 1 3 4 6 8 5 1 1 0 ).
+
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#replace_copy
