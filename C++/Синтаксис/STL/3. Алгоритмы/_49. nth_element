@@ -1,0 +1,99 @@
+nth_element
+
+Описатьг
+Секционирует диапазон элементов, правильно размещая n-йэлемент последовательности в диапазоне, который соответствует этим критериям: все элементы перед ним меньше или равно ему, а все элементы, следовать за ним, больше или равно ему.
+
+Параметры
+exec
+Используемая политика выполнения.
+first
+Итератор произвольного доступа, указывающий позицию первого элемента в разделяемом диапазоне.
+nth
+Итератор произвольного доступа, указывающий позицию элемента для правильного упорядочивания на границе раздела.
+last
+Итератор произвольного доступа, обращающийся к позиции, следующей за последним элементом в разделяемом диапазоне.
+pred
+Определяемый пользователем объект функции предиката, задающий критерий сравнения, который должен соблюдаться идущими подряд элементами при упорядочении. Предикат сравнения принимает два аргумента и возвращается true , когда удовлетворено и false когда не удовлетворено.
+
+Замечания
+Указанный диапазон должен быть допустимым. Все указатели должны поддерживать удаление ссылок, а последняя позиция в последовательности должна быть доступна из первой позиции за счет увеличения на один.
+Алгоритм nth_element не гарантирует, что элементы в подрангах с любой стороны n-го элемента сортируются. Таким образом, он делает меньше гарантий, чем partial_sort, который упорядочивает элементы в диапазоне ниже выбранного элемента, и может использоваться в качестве более быстрой альтернативы partial_sort , если порядок нижнего диапазона не требуется.
+Если ни один из элементов не меньше другого, то эти элементы эквивалентны, но не обязательно равны.
+Средняя сложность сортировки является линейной относительно last - first.
+
+Пример
+
+// alg_nth_elem.cpp
+// compile with: /EHsc
+#include <vector>
+#include <algorithm>
+#include <functional>      // For greater<int>( )
+#include <iostream>
+
+// Return whether first element is greater than the second
+bool UDgreater ( int elem1, int elem2 ) {
+    return elem1 > elem2;
+}
+
+int main() {
+    using namespace std;
+    vector<int> v1;
+    vector<int>::iterator Iter1;
+
+    int i;
+    for ( i = 0 ; i <= 5 ; i++ )
+        v1.push_back( 3 * i );
+
+    int ii;
+    for ( ii = 0 ; ii <= 5 ; ii++ )
+        v1.push_back( 3 * ii + 1 );
+
+    int iii;
+    for ( iii = 0 ; iii <= 5 ; iii++ )
+        v1.push_back( 3 * iii +2 );
+
+    cout << "Original vector:\n v1 = ( " ;
+    for ( Iter1 = v1.begin( ) ; Iter1 != v1.end( ) ; Iter1++ )
+        cout << *Iter1 << " ";
+    cout << ")" << endl;
+
+    nth_element(v1.begin( ), v1.begin( ) + 3, v1.end( ) );
+    cout << "Position 3 partitioned vector:\n v1 = ( " ;
+    for ( Iter1 = v1.begin( ) ; Iter1 != v1.end( ) ; Iter1++ )
+        cout << *Iter1 << " ";
+    cout << ")" << endl;
+
+    // To sort in descending order, specify binary predicate
+    nth_element( v1.begin( ), v1.begin( ) + 4, v1.end( ),
+            greater<int>( ) );
+    cout << "Position 4 partitioned (greater) vector:\n v1 = ( " ;
+    for ( Iter1 = v1.begin( ) ; Iter1 != v1.end( ) ; Iter1++ )
+        cout << *Iter1 << " ";
+    cout << ")" << endl;
+
+    random_shuffle( v1.begin( ), v1.end( ) );
+    cout << "Shuffled vector:\n v1 = ( " ;
+    for ( Iter1 = v1.begin( ) ; Iter1 != v1.end( ) ; Iter1++ )
+        cout << *Iter1 << " ";
+    cout << ")" << endl;
+
+    // A user-defined (UD) binary predicate can also be used
+    nth_element( v1.begin( ), v1.begin( ) + 5, v1.end( ), UDgreater );
+    cout << "Position 5 partitioned (UDgreater) vector:\n v1 = ( " ;
+    for ( Iter1 = v1.begin( ) ; Iter1 != v1.end( ) ; Iter1++ )
+        cout << *Iter1 << " ";
+    cout << ")" << endl;
+}
+
+Output
+ v1 = ( 0 3 6 9 12 15 1 4 7 10 13 16 2 5 8 11 14 17 )
+Position 3 partitioned vector:
+ v1 = ( 1 0 2 3 8 5 9 4 7 6 10 16 13 15 12 11 14 17 )
+Position 4 partitioned (greater) vector:
+ v1 = ( 16 17 14 15 13 12 11 9 7 8 10 6 1 4 5 3 2 0 )
+Shuffled vector:
+ v1 = ( 13 10 6 3 5 2 0 17 11 8 15 9 7 14 16 1 12 4 )
+Position 5 partitioned (UDgreater) vector:
+ v1 = ( 14 17 15 16 13 12 10 11 9 8 0 2 7 5 3 1 6 4 )
+
+Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#nth_element
