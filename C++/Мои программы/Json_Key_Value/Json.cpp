@@ -43,7 +43,7 @@ string Json_Key_Value(string Data, string Key, int Number)
 
 	int Pos = 0; // Счетчик для позиции одинаковых ключей в строке.
 	int Iter_count = 0; // Счетчик одинаковых ключей для вывода.
-	string Value_iter; // Подстрока в коорой будет происходить поиск значения.
+	string Value_iter; // Подстрока в которой будет происходить поиск значения.
 	string Value; // Результат.
 
 	while ((Pos = Data_iter.find(Key_iter, Pos)) != string::npos) // Ищем первый ключ в строке.
