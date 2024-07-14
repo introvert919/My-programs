@@ -12,9 +12,9 @@ using OpenQA.Selenium.Support.UI;
 using System.Threading;
 
 
-namespace Project2
+namespace Test
 {
-    internal class Test
+    internal class Testcase1
     { 
     static void Main(string[] args)
       {
