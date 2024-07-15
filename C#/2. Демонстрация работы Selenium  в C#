@@ -148,7 +148,7 @@ namespace Test
             Thread.Sleep(1000);
 
             // Нажимаем на кнопку "Запомнить меня"
-            IWebElement Remember_button = driver.FindElement(By.XPath("//*[@id=\"tooltip-269\"]/div/div/button"));
+            IWebElement Remember_button = driver.FindElement(By.CssSelector("#tooltip-276 > div > div > button"));
             Remember_button.Click();
 
             //// Close
