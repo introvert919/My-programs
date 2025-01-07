@@ -1,0 +1,83 @@
+<?php
+
+# Добро пожаловать в одномерный мир. В этом мире существует только одно шоссе - прямая от 0 до 1000.
+# Каждый день люди на этом шоссе ездят на такси на работу и домой, или в магазин.
+# В этом мире на шоссе в случайных местах (функция rand(0, 1000)) работают 5 машин такси.
+#
+# $cars = [
+#   ['name' => 'Такси 1', 'position' => rand(0, 1000), 'isFree' => (bool) rand(0, 1)],
+#   ['name' => 'Такси 2', 'position' => rand(0, 1000), 'isFree' => (bool) rand(0, 1)],
+#   ['name' => 'Такси 3', 'position' => rand(0, 1000), 'isFree' => (bool) rand(0, 1)],
+#   ['name' => 'Такси 4', 'position' => rand(0, 1000), 'isFree' => (bool) rand(0, 1)],
+#   ['name' => 'Такси 5', 'position' => rand(0, 1000), 'isFree' => (bool) rand(0, 1)],
+# ];
+#
+# где name - название машины, position - ее положение на шоссе, isFree - признак свободна или занята.
+# Ваш алгоритм, на основе этих данных, должен определить ближайшее к пассажиру такси, которое свободно.
+# Положение пассажира так же случайная величина. Он может стоять в любой точке шоссе.
+# $passanger = rand(0,1000);
+#
+# Напишите программу, которая для каждого такси будет выводить строку вида:
+# <Название машины>, стоит на <км, где стоит машина> км, до пассажира <км до пассажира> км, 
+# (<занят/свободен>) </ - едет это такси>.
+#
+# Например:
+# "Такси 1, стоит на 15 км, до пассажира 3 км (занят)"
+# "Такси 2, стоит на 0 км, до пассажира 12 км (свободен) - едет это такси"
+# "Такси 3, стоит на 300 км, до пассажира 288 км (свободен)"
+# 
+# Для переноса строки используйте echo 'br'; или константу PHP_EOL.
+
+# Решение:
+
+$cars = [
+    ['name' => 'Такси 1', 'position' => rand(0, 1000), 'isFree' => (bool) rand(0, 1)],
+    ['name' => 'Такси 2', 'position' => rand(0, 1000), 'isFree' => (bool) rand(0, 1)],
+    ['name' => 'Такси 3', 'position' => rand(0, 1000), 'isFree' => (bool) rand(0, 1)],
+    ['name' => 'Такси 4', 'position' => rand(0, 1000), 'isFree' => (bool) rand(0, 1)],
+    ['name' => 'Такси 5', 'position' => rand(0, 1000), 'isFree' => (bool) rand(0, 1)],
+];
+
+$passenger = rand(0, 1000);
+$near;
+$near_value = 1001;
+$result = [];
+
+foreach ($cars as $key => $value) 
+{
+    $position = $cars[$key]['position'];
+    $isFree = $cars[$key]['isFree'];
+
+    if($isFree == false)
+    {
+        $isFree_value = "(занят)";
+    }
+    else
+    {
+        $isFree_value = "(свободен)";
+    }
+
+    if(abs($position - $passenger) < $near_value && $isFree == true)
+    { 
+      $near_value = abs($position - $passenger);
+      $near = $key;
+    }
+
+    $result[$key][0] = $cars[$key]['name']." ";
+    $result[$key][1] = "стоит на ".$position." км ";
+    $result[$key][2] = "до пассажира ". abs($position - $passenger)." км ";
+    $result[$key][3] = $isFree_value;
+}
+
+foreach ($result as $key => $value) 
+{
+    if($key == $near)
+    {
+        echo $result[$key][0].$result[$key][1].$result[$key][2].$result[$key][3]." - едет это такси".PHP_EOL;
+    }
+    else
+    {
+        echo $result[$key][0].$result[$key][1].$result[$key][2].$result[$key][3].PHP_EOL;
+    }
+}
+
