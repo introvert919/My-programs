@@ -1,6 +1,0 @@
-random_shuffle
-
-Описание
-Функция std::random_shuffle() устарела, заменена std::shuffle. 
-
-Источник: https://learn.microsoft.com/ru-ru/cpp/standard-library/algorithm-functions?view=msvc-170#random_shuffle
